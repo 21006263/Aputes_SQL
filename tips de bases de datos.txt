@@ -1,0 +1,3673 @@
+EJEMPLOS
+//* CONSULTAS
+
+SELECT 1;
+Restablecer contraseña root MySQL
+
+
+
+Si has perdido la contraseña de tu usuario root, no te preocupes, es posible restablecerla siguiendo los siguientes pasos.
+
+Si el servidor se encuentra en una maquina remota debemos de ingresar a esta mediante SSH Tutorial
+
+Lo primero que debemos de hacer es detener el servidor.
+
+> mysql.server stop
+
+> service mysqld stop
+
+> mysqld stop
+Una vez el servidor se encuentre detenido, debemos de reiniciarlo en un modo seguro.
+
+sudo mysqld_safe --skip-grant-tables --skip-networkin
+--skip-grant-tables Permite conectarnos al servidor sin la necesidad de un password, además de otrogar todos los privilegios a la sesión.
+
+--skip-networkin Detiene la escucha de peticiones TCP/IP
+
+Ahora, en una nueva pestaña, debemos de conectarnos al servidor utilizando el usuario root
+
+mysql -u root
+Una vez dentro del servidor, debemos de trabajar con la base de datos MySQL
+
+USE mysql;
+Con el cambio de base de datos haremos la actualización.
+
+UPDATE user SET password=PASSWORD('tu_password') WHERE user='root';
+Si la actualización fue exitosa debemos de salir del servidor
+
+FLUSH PRIVILEGES;
+exit
+El paso final es detener el servidor en modo seguro. Iniciamos el servidor como te costumbre y nos autenticamos, la contraseña ya estará funcionando.
+
+
+
+
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin
+mysql -u root -p -h 127.0.0.1
+---> nos pide la contraseña y ms21HG//
+
+variables 
+ejemplos:
+
+1 SET @nombre = "Henry";
+2 SET @nombre := "Henry";
+
+SET @curso = "base de datos", @gestor = "mysql";
+optener valor de la variables
+ SELECT @nombre;
+devuelve henry.
+
+SELECT @nombre, @curso, @gestor;
+devuelve una tabla con las 3 variables almacenada
+henry , base de datos , mysql.
+
+------------- ••>>clear base de datos
+CREATE DATABASE libreria_cf;
+listo ☺
+COMANDO LISTAR BASES DE DATOS EN PLURAR 
+SHOW DATABASES; ☺
+
+eliminar base de datos
+DROP DATABASE libreria_cf;
+ojo mucho cuidado con esta accion
+
+
+creo nuevamente a libreria y 
+le digo :)>
+que todos los cambio se realicen sobre libreria exclusivamante
+USE libreria_cf;
+Database changed me aroja dicho mensaje
+
+
+generamos tablas ya normalizadas
+
+
+
+CREATE TABLE autores(
+autor_id INT,
+nombre VARCHAR(25),
+apellido VARCHAR(25),
+genero CHAR(1),
+fecha_nacimiento DATE,
+pais_origen VARCHAR(40)
+);
+
+
+Query OK, 0 rows affected (3.62 sec)
+
+
+-- llevar un control de sentencias a llevar
+/*¿ que tipos de entidades ? autores
+Nombere : autores
+*/
+-- los datos que quiero almacenar son!
+
+
+Nombere
+Genero
+Fecha de nacimiento
+Pais de origen
+
+/*siguinete paso la normalizacion*/
+--1 generar la colummna y el tipo de datos
+--2 para terminare de normalizar agregamos autor_id
+
+--3 vamos a pasar nuestro ultimo paso generar nuestra tabla;
+-- siguiendo la misma estructura---->
+
+CREATE TABLE autores(
+autor_id INT,
+nombre VARCHAR(25),
+apellido VARCHAR(25),
+genero CHAR(1),
+fecha_nacimiento DATE,
+pais_origen VARCHAR(40)
+);
+
+ahora lo que se hace es una estructura de lo que deseamos en nuestra tabla y las llevamos a la conslola para generar la tabla;
+/*
+autor_id INT -- ESTA COLUMNA SOLO LAMACENARA NUMEROS ENTEROS
+nombre VARCHAR(25) -- SOLO 50CARACTERES
+apellido VARCHAR(25)
+genero CHAR(1) -- CADENA ALFANUMERIACA DE 0 A 250 (M 0 F)
+fecha_nacimento DATE
+pais_origen VARCHAR(40) -- de longitud
+*/
+
+
+Tipos de datos
+En general, la mayoría de los servidores de base de datos nos permiten almacenar los mismo tipo de datos, como strings, fechas y número.
+
+En este post, listamos los tipos de datos que más utilizarás en tu día a día.
+
+ALFANUMÉRICOS
+CHAR
+VARCHAR
+En ambos casos nosotros debemos de especificar la longitud máxima que podrá almacenar el campo. Opcionalmente podemos definir el charset que almacenará.
+
+varchar(20) character set utf8
+Con MySQL nosotros podemos establecer el charset que usará la base de datos desde su creación create database nombre character set utf8;
+
+NÚMEROS ENTEROS
+Tipo	Rango
+Tinyint	-128 a 127
+Smallint	-32,768 a 32,767
+Mediumint	−8,388,608 a 8,388,607
+Int	−2,147,483,648 a 2,147,483,647
+Bigint	−9,223,372,036,854,775,808 a 9,223,372,036,854,775,807
+NÚMEROS FLOTANTES
+Para los flotantes encontraremos dos tipos
+
+Float
+Double
+En ambos casos nosotros debemos de especificar la cantidad de dígitos que almacenará la columna antes y después del punto (p,s)
+
+precio FLOAT(3, 2)
+En este caso la columna podrá almacenar hasta tres dígitos como enteros y dos después del punto decimal.
+
+Ejemplo 999.99
+
+TIEMPO
+Tipo	Formato default
+Date	YYYY-MM-DD
+Datetime	YYYY-MM-DD HH:MI:SS
+Timestamp	YYYY-MM-DD HH:MI:SS
+Time	HHH:MI:SS
+
+
+
+lista y eliminar table
+LISTA TABLAS
+SHOW TABLES;
+
+DEVUELVE LISTADO DE TABLAS
++-----------------------+
+| Tables_in_libreria_cf |
++-----------------------+
+| autores               |
++-----------------------+
+1 row in set (0.38 sec)
+
+ PARA SABER EN QUE BASEDE DATOS ESTAMOS TRABAJANDO
+
+SELECT DATABASE();
+
+mysql> SELECT DATABASE();
++-------------+
+| DATABASE()  |
++-------------+
+| libreria_cf |
++-------------+
+1 row in set (0.00 sec)
+
+
+ELIMINARA TABLE
+OJO CON ESO ES IMPORTAMTE SABER QUE VAS A ELIMINAR
+mysql> DROP TABLE autores;
+Query OK, 0 rows affected (3.15 sec)
+
+
+LISTAMOS Y DICE NO HAY TABLAS ALGUNA
+
+mysql> SHOW TABLES;
+Empty set (0.03 sec)
+
+
+OBTENER LA INFO DE LAS TABLAS CREADAS
+••> SHOW COLUMNS FROM
+HASTA ESTA ETAPA SOLO CON 2 COLUMNAS 
+Field
+Type
+
+y podemos ver la definicion de nuestras trablas
+
+
+mysql> SHOW COLUMNS FROM autores;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| autor_id         | int         | YES  |     | NULL    |       |
+| nombre           | varchar(25) | YES  |     | NULL    |       |
+| apellido         | varchar(25) | YES  |     | NULL    |       |
+| genero           | char(1)     | YES  |     | NULL    |       |
+| fecha_nacimiento | date        | YES  |     | NULL    |       |
+| pais_origen      | varchar(40) | YES  |     | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+6 rows in set (0.35 sec)
+
+
+y mas adelante trabajaremos con 
+Null
+Key
+Defaul
+Extra
+
+Ejemplo otra Forma de Consulta de las tablas
+obteniendo las misma salida que
+
+
+mysql> DESC autores;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| autor_id         | int         | YES  |     | NULL    |       |
+| nombre           | varchar(25) | YES  |     | NULL    |       |
+| apellido         | varchar(25) | YES  |     | NULL    |       |
+| genero           | char(1)     | YES  |     | NULL    |       |
+| fecha_nacimiento | date        | YES  |     | NULL    |       |
+| pais_origen      | varchar(40) | YES  |     | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+6 rows in set (0.05 sec)
+
+
+CREAR TABLAS APARTIR DE OTRA
+ EL LIKE SERIA > como el nodo que dice replicame igual a la tabla de autores
+
+ CREATE TABLE usuarios LIKE autores;
+Query OK, 0 rows affected (1.66 sec)
+
+mysql>
+
+
+mysql> DESC autores;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| autor_id         | int         | YES  |     | NULL    |       |
+| nombre           | varchar(25) | YES  |     | NULL    |       |
+| apellido         | varchar(25) | YES  |     | NULL    |       |
+| genero           | char(1)     | YES  |     | NULL    |       |
+| fecha_nacimiento | date        | YES  |     | NULL    |       |
+| pais_origen      | varchar(40) | YES  |     | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+6 rows in set (0.15 sec)
+
+mysql>
+mysql> DESC usuarios;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| autor_id         | int         | YES  |     | NULL    |       |
+| nombre           | varchar(25) | YES  |     | NULL    |       |
+| apellido         | varchar(25) | YES  |     | NULL    |       |
+| genero           | char(1)     | YES  |     | NULL    |       |
+| fecha_nacimiento | date        | YES  |     | NULL    |       |
+| pais_origen      | varchar(40) | YES  |     | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+6 rows in set (0.86 sec)
+
+
+
+Insertar Registros!!
+
+
+-- INSERTAR REGISTROS
+--VAMOS A INSERTAR REGISTROS FIGTICIOS DE AUTORES
+-- LA siguiendo estructura
+--el orden es completamente irrelevante, pues pudiece colocar el orden que a vos le convenga
+ INSERT INTO autores (autor_id, nombre, apellido, genero, fecha_nacimiento, pais_origen)
+ -- EN VALUES SI ES IMPORTANTE EL ORDEN DEL INSERT INTO
+ -- ejemplo si colocamos 2 columnas debemos colocar 2 valores
+VALUES (1, 'Test autor', 'Test autor', 'M', '2021-01-30', 'venezuela');
+
+
+
+mysql> INSERT INTO autores (autor_id, nombre, apellido, genero, fecha_nacimiento, pais_origen)
+    -> VALUES (1, 'Test autor', 'Test autor', 'M', '2021-01-30', 'venezuela');
+Query OK, 1 row affected (0.34 sec)
+
+mysql>
+
+consulta:
+SELECT * FROM autores;
+
+mysql> SELECT * FROM autores;
++----------+------------+------------+--------+------------------+-------------+
+| autor_id | nombre     | apellido   | genero | fecha_nacimiento | pais_origen |
++----------+------------+------------+--------+------------------+-------------+
+|        1 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
++----------+------------+------------+--------+------------------+-------------+
+1 row in set (0.00 sec)
+
+
+
+
+-- un nuevo registro
+
+INSERT INTO autores (autor_id, nombre)
+VALUES (1, 'Test autor');
+
+
+
+mysql> SELECT * FROM autores;
++----------+------------+------------+--------+------------------+-------------+
+| autor_id | nombre     | apellido   | genero | fecha_nacimiento | pais_origen |
++----------+------------+------------+--------+------------------+-------------+
+|        1 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        1 | Test autor | NULL       | NULL   | NULL             | NULL        |
++----------+------------+------------+--------+------------------+-------------+
+2 rows in set (0.00 sec)
+
+
+
+--el Performace no es el obtimo si queremos ingresar varios registro y aplicamos n de veces el insert por separado. vamos y veamos
+-- haremos refactora a las varias lineas de codigos y a los varios registro tambien se les denomina dublas
+
+INSERT INTO autores (autor_id, nombre, apellido, genero, fecha_nacimiento, pais_origen)
+VALUES  (1, 'Test autor', 'Test autor', 'M', '2021-01-30', 'venezuela'),
+        (2, 'Test autor', 'Test autor', 'M', '2021-01-30', 'venezuela'),
+       (3, 'Test autor', 'Test autor', 'M', '2021-01-30', 'venezuela'),
+	   (4, 'Test autor', 'Test autor', 'M', '2021-01-30', 'venezuela'),
+	   (5, 'Test autor', 'Test autor', 'M', '2021-01-30', 'venezuela');
+	   -- esta seraia nuestra forma de armar las sentencias o duplas de datos con un solo INSERT INTO
+
+
+mysql> INSERT INTO autores (autor_id, nombre, apellido, genero, fecha_nacimiento, pais_origen)
+    -> VALUES  (1, 'Test autor', 'Test autor', 'M', '2021-01-30', 'venezuela'),
+    ->         (2, 'Test autor', 'Test autor', 'M', '2021-01-30', 'venezuela'),
+    ->        (3, 'Test autor', 'Test autor', 'M', '2021-01-30', 'venezuela'),
+    ->    (4, 'Test autor', 'Test autor', 'M', '2021-01-30', 'venezuela'),
+    ->    (5, 'Test autor', 'Test autor', 'M', '2021-01-30', 'venezuela');
+Query OK, 5 rows affected (0.27 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> SELECT * FROM autores;
++----------+------------+------------+--------+------------------+-------------+
+| autor_id | nombre     | apellido   | genero | fecha_nacimiento | pais_origen |
++----------+------------+------------+--------+------------------+-------------+
+|        1 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        1 | Test autor | NULL       | NULL   | NULL             | NULL        |
+|        1 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        2 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        3 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        4 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        5 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
++----------+------------+------------+--------+------------------+-------------+
+7 rows in set (0.00 sec)
+
+
+-- EN ESTA SENTENCIAS YA SE USARIAS VARIAS EN UNA
+-- CON MAYOR PERFORMACE
+
+DROP DATABASE libreria_cf;
+CREATE DATABASE libreria_cf;
+
+USE libreria_cf;
+CREATE TABLE autores(
+autor_id INT,
+nombre VARCHAR(25),
+apellido VARCHAR(25),
+genero CHAR(1),
+fecha_nacimiento DATE,
+pais_origen VARCHAR(40)
+);
+
+INSERT INTO autores (autor_id, nombre, apellido, genero, fecha_nacimiento, pais_origen)
+VALUES  (1, 'Test autor', 'Test autor', 'M', '2021-01-30', 'venezuela'),
+        (2, 'Test autor', 'Test autor', 'M', '2021-01-30', 'venezuela'),
+       (3, 'Test autor', 'Test autor', 'M', '2021-01-30', 'venezuela'),
+	   (4, 'Test autor', 'Test autor', 'M', '2021-01-30', 'venezuela'),
+	   (5, 'Test autor', 'Test autor', 'M', '2021-01-30', 'venezuela');
+
+SELECT * FROM autores;
+
+-- y esta es la forma de la que podemos ejecutar un archivo punto sql
+--ejecutando sentecias desde archivos sql
+
+
+-- imciamos nuevamnete el terminar
+
+
+y los que nos devuelve es la siguiente salida
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u root -p < "C:\Users\TATIANA\Desktop\Escritorio 2021-2022\Cursos de codigo facilito\Bases de datos\senten.sql"
+Enter password: ********
+autor_id        nombre  apellido        genero  fecha_nacimiento        pais_origen
+1       Test autor      Test autor      M       2021-01-30      venezuela
+2       Test autor      Test autor      M       2021-01-30      venezuela
+3       Test autor      Test autor      M       2021-01-30      venezuela
+4       Test autor      Test autor      M       2021-01-30      venezuela
+5       Test autor      Test autor      M       2021-01-30      venezuela
+
+
+
+se aplica esta sentencia quitando el c: y las comillas para que puedan funcionar
+
+mysql -u root -p
+
+
+SOURCE /users/TATIANA/Desktop/Escritorio 2021-2022/Cursos de codigo facilito/Bases de datos/senten.sql;
+
+
+dando asi los que hizo en cada pason de sentencia
+
+mysql> SOURCE /users/TATIANA/Desktop/Escritorio 2021-2022/Cursos de codigo facilito/Bases de datos/senten.sql;
+Query OK, 1 row affected (0.96 sec)
+
+Query OK, 1 row affected (0.24 sec)
+
+Database changed
+Query OK, 0 rows affected (3.84 sec)
+
+Query OK, 5 rows affected (0.26 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
++----------+------------+------------+--------+------------------+-------------+
+| autor_id | nombre     | apellido   | genero | fecha_nacimiento | pais_origen |
++----------+------------+------------+--------+------------------+-------------+
+|        1 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        2 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        3 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        4 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        5 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
++----------+------------+------------+--------+------------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql>
+
+como aqui ya la habia eliminado el condiciona al crear me da un error  diciendo que la batabase no existe y solo la crea y continua
+
+
+CONDICION DE SENTENCIA
+
+
+mysql> SOURCE /users/TATIANA/Desktop/Escritorio 2021-2022/Cursos de codigo facilito/Bases de datos/senten.sql;
+ERROR 1008 (HY000): Can't drop database 'libreria_cf'; database doesn't exist
+Query OK, 1 row affected (0.19 sec)
+
+Database changed
+Query OK, 0 rows affected (2.44 sec)
+
+Query OK, 5 rows affected (0.24 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
++----------+------------+------------+--------+------------------+-------------+
+| autor_id | nombre     | apellido   | genero | fecha_nacimiento | pais_origen |
++----------+------------+------------+--------+------------------+-------------+
+|        1 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        2 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        3 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        4 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        5 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
++----------+------------+------------+--------+------------------+-------------+
+5 rows in set (0.00 sec)
+
+eliminamos la databese nuevamente
+
+mysql> DROP DATABASE libreria_cf;
+Query OK, 1 row affected (0.78 sec)
+
+mysql>
+
+
+
+
+
+no encontramos error alguno!!
+
+
+mysql> SOURCE /users/TATIANA/Desktop/Escritorio 2021-2022/Cursos de codigo facilito/Bases de datos/senten.sql;
+Query OK, 0 rows affected, 1 warning (0.07 sec)
+
+Query OK, 1 row affected (0.13 sec)
+
+Database changed
+Query OK, 0 rows affected (1.94 sec)
+
+Query OK, 5 rows affected (0.32 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
++----------+------------+------------+--------+------------------+-------------+
+| autor_id | nombre     | apellido   | genero | fecha_nacimiento | pais_origen |
++----------+------------+------------+--------+------------------+-------------+
+|        1 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        2 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        3 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        4 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        5 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
++----------+------------+------------+--------+------------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql>
+
+
+
+-- LAS CONDICIONES SON TANTO PARA DATABASE COMO PARA TABLAS//
+
+añadiendo la bandera de -e podemos ejucartar sentencias si haber iniciado seccion como tar
+
+
+
+
+consultas rapidas
+
+
+
+comando --- 
+mysql -u root -p libreria_cf -e "SELECT * FROM autores"
+mas el nombre de la base de datos
+
+mysql -u root -p libreria_cf -e "SELECT * FROM autores"
+Enter password: ********
++----------+------------+------------+--------+------------------+-------------+
+| autor_id | nombre     | apellido   | genero | fecha_nacimiento | pais_origen |
++----------+------------+------------+--------+------------------+-------------+
+|        1 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        2 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        3 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        4 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
+|        5 | Test autor | Test autor | M      | 2021-01-30       | venezuela   |
++----------+------------+------------+--------+------------------+-------------+
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>
+
+valores unicos y nulos y sus contrains
+
+
+
+DROP DATABASE IF EXISTS libreria_cf;
+CREATE DATABASE IF NOT EXISTS libreria_cf;
+
+USE libreria_cf;
+CREATE TABLE IF NOT EXISTS autores(
+autor_id INT NOT NULL,
+nombre VARCHAR(25) NOT NULL,
+apellido VARCHAR(25) NOT NULL,
+seudonimo VARCHAR(50) UNIQUE,
+genero CHAR(1) NOT NULL,
+fecha_nacimiento DATE NOT NULL,
+pais_origen VARCHAR(40) NOT NULL
+);
+
+INSERT INTO autores (autor_id, nombre, apellido, genero, fecha_nacimiento, pais_origen)
+VALUES   (1, 'HENRY', 'MORENO', 'M', '2021-01-30', 'venezuela'),
+         (2, 'HENRY', 'MORENO', 'M', '2021-01-30', 'venezuela'),
+        (3, 'HENRY',  'MORENO', 'M', '2021-01-30', 'venezuela'),
+	    (4, 'HENRY',  'MORENO', 'M', '2021-01-30', 'venezuela'),
+	    ( 5, 'HENRY', 'MORENO', 'M', '2021-01-30', 'venezuela');
+		INSERT INTO autores (autor_id, nombre, apellido, seudonimo, fecha_nacimiento, genero, pais_origen)
+VALUES  (10, 'Stephen', 'Ewdin', 'King', '1947-09-27', 'M', 'USA');
+
+ SELECT * FROM autores;
+
+
+
+su salida 
+
+
+----------+---------+----------+-----------+--------+------------------+-------------+
+| autor_id | nombre  | apellido | seudonimo | genero | fecha_nacimiento | pais_origen |
++----------+---------+----------+-----------+--------+------------------+-------------+
+|        1 | HENRY   | MORENO   | NULL      | M      | 2021-01-30       | venezuela   |
+|        2 | HENRY   | MORENO   | NULL      | M      | 2021-01-30       | venezuela   |
+|        3 | HENRY   | MORENO   | NULL      | M      | 2021-01-30       | venezuela   |
+|        4 | HENRY   | MORENO   | NULL      | M      | 2021-01-30       | venezuela   |
+|        5 | HENRY   | MORENO   | NULL      | M      | 2021-01-30       | venezuela   |
+|       10 | Stephen | Ewdin    | King      | M      | 1947-09-27       | USA         |
++----------+---------+----------+-----------+--------+------------------+-------------+
+6 rows in set (0.00 sec)
+ 
+registro duplicado ya que es unico
+
+mysql> INSERT INTO autores (autor_id, nombre, apellido, seudonimo, fecha_nacimiento, genero, pais_origen)
+    -> VALUES  (10, 'Stephen', 'Ewdin', 'King', '1947-09-27', 'M', 'USA');
+ERROR 1062 (23000): Duplicate entry 'King' for key 'autores.seudonimo'
+mysql>
+
+
+
+
+vaolres por dedauls
+modificamos nuevamente la table
+
+
+DROP DATABASE IF EXISTS libreria_cf;
+CREATE DATABASE IF NOT EXISTS libreria_cf;
+
+USE libreria_cf;
+CREATE TABLE IF NOT EXISTS autores(
+autor_id INT NOT NULL,
+nombre VARCHAR(25) NOT NULL,
+apellido VARCHAR(25) NOT NULL,
+seudonimo VARCHAR(50) UNIQUE,
+genero CHAR(1) NOT NULL,
+fecha_nacimiento DATE NOT NULL,
+pais_origen VARCHAR(40) NOT NULL,
+fecha_creación DATETIME DEFAULT
+);
+
+		INSERT INTO autores (autor_id, nombre, apellido, seudonimo, fecha_nacimiento, genero, pais_origen)
+VALUES (10, 'Stephen', 'Ewdin', 'King', '1947-09-27', 'M', 'USA');
+
+ SELECT * FROM autores;
+
+
+
+para saber la fecha hora y minutos exatos
+SELECT current_timestamp;
+
+
+
+mysql> SELECT current_timestamp;
++---------------------+
+| current_timestamp   |
++---------------------+
+| 2021-11-25 21:58:32 |
++---------------------+
+1 row in set (0.05 sec)
+
+mysql>
+
+
+OTRA FOEMA DE SABER LA HORA FECHA Y SEGUNDOS EXACTOS
+
+mysql> SELECT NOW();
++---------------------+
+| NOW()               |
++---------------------+
+| 2021-11-25 22:00:10 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+mysql> SOURCE /users/TATIANA/Desktop/Escritorio 2021-2022/Cursos de codigo facilito/Bases de datos/senten.sql;
+Query OK, 1 row affected (5.32 sec)
+
+Query OK, 1 row affected (0.27 sec)
+
+Database changed
+Query OK, 0 rows affected (2.38 sec)
+
+Query OK, 1 row affected (0.90 sec)
+
++----------+---------+----------+-----------+--------+------------------+-------------+---------------------+
+| autor_id | nombre  | apellido | seudonimo | genero | fecha_nacimiento | pais_origen | fecha_creacion      |
++----------+---------+----------+-----------+--------+------------------+-------------+---------------------+
+|       10 | Stephen | Ewdin    | King      | M      | 1947-09-27       | USA         | 2021-11-26 00:12:41 |
++----------+---------+----------+-----------+--------+------------------+-------------+---------------------+
+1 row in set (0.12 sec)
+
+mysql>
+
+
+DROP DATABASE IF EXISTS libreria_cf;
+CREATE DATABASE IF NOT EXISTS libreria_cf;
+
+USE libreria_cf;
+CREATE TABLE IF NOT EXISTS autores(
+autor_id INT NOT NULL,
+nombre VARCHAR(25) NOT NULL,
+apellido VARCHAR(25) NOT NULL,
+seudonimo VARCHAR(50) UNIQUE,
+genero CHAR(1) NOT NULL,
+fecha_nacimiento DATE NOT NULL,
+pais_origen VARCHAR(40) NOT NULL,
+fecha_creacion DATETIME DEFAULT current_timestamp -- con esta propiedad vemos que anque no ha sido definido un valor el current_timestamp me agrega el valor de fecha horas, minutos y segundos exatos de la creacion del registro
+
+);
+
+
+		INSERT INTO autores (autor_id, nombre, apellido, seudonimo, fecha_nacimiento, genero, pais_origen)
+VALUES  (10, 'Stephen', 'Ewdin', 'King', '1947-09-27', 'M', 'USA');
+
+ SELECT * FROM autores;
+
+
+
+#      NUMEROS POSITIVOS
+EL AUTOR ID AGREGA NUMEROS NEGATIVOS OJO REVISAR
+
+EJEMPLO MENOS 10 EN EL REGISTRO
+UNSIGNED
+
+UNSIGNED ME DEJA AL ID FUERA DE RANGO Y ME GENERA UN ERROR!
+POR QUE CON EL EVITA LA INSERSION DE NUMEROS NEGATIVOS COMO ESTABA ANTERIORMENTE
+
+
+NUEVO TIPO DE DATOS Enum !!
+es una lista de la cual una columna puede tomar el valor
+utilizando el tipo enum en la columna genero
+
+genero ENUM('M', 'F'), UNICOS DATOS QUE ALMACENA GENER, almacena m o f
+
+
+
+mysql> SOURCE /users/TATIANA/Desktop/Escritorio 2021-2022/Cursos de codigo facilito/Bases de datos/senten.sql
+Query OK, 1 row affected (0.48 sec)
+
+Query OK, 1 row affected (0.25 sec)
+
+Database changed
+Query OK, 0 rows affected (3.31 sec)
+
+Query OK, 1 row affected (0.21 sec)
+
++----------+---------+----------+-----------+--------+------------------+-------------+---------------------+
+| autor_id | nombre  | apellido | seudonimo | genero | fecha_nacimiento | pais_origen | fecha_creacion      |
++----------+---------+----------+-----------+--------+------------------+-------------+---------------------+
+|       10 | Stephen | Ewdin    | King      | M      | 1947-09-27       | USA         | 2021-11-26 00:33:56 |
++----------+---------+----------+-----------+--------+------------------+-------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql>
+vemos que no hay problema insetrta mayuscula o minusculas
+
+
+
+LLAVES PRIMARIAS
+
+autor_id INT UNSIGNER PRIMARY KEY,
+CON ESTA COLUMNA LE ORDENAMOS A MYSQL QUE ORDEN VAJOS ESTA TRABBLA LOS DATOS,
+DE IGUAL FORMA INDICAMOS QUE ESTE CAMPO DEBE SER UNICO Y NO PERMITIR NULOS
+
+
+ES IMPORTANTE MENCIONAR QUE SOLO SE TIENE UNA LLAVE PRIMARIA POR TABLA
+ASIGNAMOS EL AUTO_INCREMENT POR SI EL ID NO CUENTA CON UN VALOR AUTOINCREMENTABLE 
+SE INCREMENTE DE FORMA AUTOMATICA + 1
+COMO YA TENEMOS UN AUTO INREMENT PODEMOS OBMITI EN CAMPO VALUES ID
+
+
+DROP DATABASE IF EXISTS libreria_cf;
+CREATE DATABASE IF NOT EXISTS libreria_cf;
+
+USE libreria_cf;
+CREATE TABLE IF NOT EXISTS autores(
+autor_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+nombre VARCHAR(25) NOT NULL,
+apellido VARCHAR(25) NOT NULL,
+seudonimo VARCHAR(50) UNIQUE,
+genero ENUM('M', 'F'),
+fecha_nacimiento DATE NOT NULL,
+pais_origen VARCHAR(40) NOT NULL,
+fecha_creacion DATETIME DEFAULT current_timestamp
+);
+
+
+		INSERT INTO autores (nombre, apellido, seudonimo, fecha_nacimiento, genero, pais_origen)
+VALUES  ('Stephen', 'Ewdin', 'King', '1947-09-27', 'M', 'USA');
+
+ SELECT * FROM autores;
+
+
+Query OK, 2 rows affected (0.18 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
++----------+---------+----------+-------------+--------+------------------+-------------+---------------------+
+| autor_id | nombre  | apellido | seudonimo   | genero | fecha_nacimiento | pais_origen | fecha_creacion      |
++----------+---------+----------+-------------+--------+------------------+-------------+---------------------+
+|        1 | Stephen | Ewdin    | King        | M      | 1947-09-27       | USA         | 2021-11-26 00:51:46 |
+|        2 | Joanne  | Rwling   | J.k Rowling | F      | 1947-09-27       | Reino unido | 2021-11-26 00:51:46 |
++----------+---------+----------+-------------+--------+------------------+-------------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql>
+
+
+
+ #     llaves foraneas
+
+
+las llaves foraneas sirve para hacer referencia entre tablas, 
+solo que demos usar la palabra FOREING KEY
+
+
+
+
+DROP DATABASE IF EXISTS libreria_cf;
+CREATE DATABASE IF NOT EXISTS libreria_cf;
+
+USE libreria_cf;
+CREATE TABLE IF NOT EXISTS autores(
+autor_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+nombre VARCHAR(25) NOT NULL,
+apellido VARCHAR(25) NOT NULL,
+seudonimo VARCHAR(50) UNIQUE,
+genero ENUM('M', 'F'),
+fecha_nacimiento DATE NOT NULL,
+pais_origen VARCHAR(40) NOT NULL,
+fecha_creacion DATETIME DEFAULT current_timestamp
+);
+
+CREATE TABLE libros(
+libro_id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+titulo VARCHAR(25) NOT NULL,
+descripcion VARCHAR(250),
+pagina INTEGER(50) UNSIGNED,
+fecha_publicacion Date NOT NULL,
+fecha_creacion DATETIME DEFAULT current_timestamp
+);
+
+
+		INSERT INTO autores (nombre, apellido, seudonimo, fecha_nacimiento, genero, pais_origen)
+VALUES  ('Stephen', 'Ewdin', 'King', '1947-09-27', 'M', 'USA'),
+        ('Joanne', 'Rwling', 'J.k Rowling', '1947-09-27', 'F', 'Reino unido');
+
+ SELECT * FROM autores;
+
+
+relacion de 1 a muchos por en autor lo pueden tener muchos libros pero un libro solo le pertenece aun autor
+
+
+
+
+
+
+DROP DATABASE IF EXISTS libreria_cf;
+CREATE DATABASE IF NOT EXISTS libreria_cf;
+
+USE libreria_cf;
+CREATE TABLE IF NOT EXISTS autores(
+autor_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+nombre VARCHAR(25) NOT NULL,
+apellido VARCHAR(25) NOT NULL,
+seudonimo VARCHAR(50) UNIQUE,
+genero ENUM('M', 'F'),
+fecha_nacimiento DATE NOT NULL,
+pais_origen VARCHAR(40) NOT NULL,
+fecha_creacion DATETIME DEFAULT current_timestamp
+);
+
+CREATE TABLE libros(
+libro_id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+autor_id INT UNSIGNED NOT NULL, --LLAVE FORANEA LUEGO DE LA PRIMARY KEY  POR TEMAS DE ESTETICA
+titulo VARCHAR(25) NOT NULL,
+descripcion VARCHAR(250),
+pagina INTEGER(50) UNSIGNED,
+fecha_publicacion Date NOT NULL,
+fecha_creacion DATETIME DEFAULT current_timestamp,
+FOREIGN KEY (autor_id) REFERENCES autores (autor_id)/* RELACION DE MUCHOS A UNO CLAVE FORANIA DE RELACION HACIENDO REFERENCIA A LA TABLA AUTORES AL CAMPO AUTOR_ID*/
+
+);
+
+
+		INSERT INTO autores (nombre, apellido, seudonimo, fecha_nacimiento, genero, pais_origen)
+VALUES  ('Stephen', 'Ewdin', 'King', '1947-09-27', 'M', 'USA'),
+        ('Joanne', 'Rwling', 'J.k Rowling', '1947-09-27', 'F', 'Reino unido');
+
+ SELECT * FROM autores;
+
+
+
+
+mysql> SOURCE /users/TATIANA/Desktop/Escritorio 2021-2022/Cursos de codigo facilito/Bases de datos/senten.sql
+Query OK, 1 row affected (1.11 sec)
+
+Query OK, 1 row affected (0.33 sec)
+
+Database changed
+Query OK, 0 rows affected (2.32 sec)
+
+Query OK, 0 rows affected, 1 warning (4.74 sec)
+
+Query OK, 2 rows affected (0.36 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
++----------+---------+----------+-------------+--------+------------------+-------------+---------------------+
+| autor_id | nombre  | apellido | seudonimo   | genero | fecha_nacimiento | pais_origen | fecha_creacion      |
++----------+---------+----------+-------------+--------+------------------+-------------+---------------------+
+|        1 | Stephen | Ewdin    | King        | M      | 1947-09-27       | USA         | 2021-11-26 10:54:58 |
+|        2 | Joanne  | Rwling   | J.k Rowling | F      | 1947-09-27       | Reino unido | 2021-11-26 10:54:58 |
++----------+---------+----------+-------------+--------+------------------+-------------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql>
+2 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++-----------------------+
+| Tables_in_libreria_cf |
++-----------------------+
+| autores               |
+| libros                |
++-----------------------+
+2 rows in set (0.85 sec)
+
+mysql>
+
+ 
+
+mysql> DESC libros;
++-------------------+--------------+------+-----+-------------------+-------------------+
+| Field             | Type         | Null | Key | Default           | Extra             |
++-------------------+--------------+------+-----+-------------------+-------------------+
+| libro_id          | int unsigned | NO   | PRI | NULL              | auto_increment    |
+| autor_id          | int unsigned | NO   | MUL | NULL              |                   |
+| titulo            | varchar(25)  | NO   |     | NULL              |                   |
+| descripcion       | varchar(250) | YES  |     | NULL              |                   |
+| pagina            | int unsigned | YES  |     | NULL              |                   |
+| fecha_publicacion | date         | NO   |     | NULL              |                   |
+| fecha_creacion    | datetime     | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++-------------------+--------------+------+-----+-------------------+-------------------+
+7 rows in set (0.28 sec)
+
+mysql>
+
+
+
+
+DROP DATABASE IF EXISTS libreria_cf;
+CREATE DATABASE IF NOT EXISTS libreria_cf;
+
+USE libreria_cf;
+CREATE TABLE IF NOT EXISTS autores(
+autor_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+nombre VARCHAR(25) NOT NULL,
+apellido VARCHAR(25) NOT NULL,
+seudonimo VARCHAR(50) UNIQUE,
+genero ENUM('M', 'F'),
+fecha_nacimiento DATE NOT NULL,
+pais_origen VARCHAR(40) NOT NULL,
+fecha_creacion DATETIME DEFAULT current_timestamp
+);
+
+CREATE TABLE libros(
+libro_id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+autor_id INT UNSIGNED NOT NULL,
+titulo VARCHAR(25) NOT NULL,
+descripcion VARCHAR(250),
+pagina INTEGER(50) UNSIGNED,
+fecha_publicacion Date NOT NULL,
+fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+FOREIGN KEY (autor_id) REFERENCES autores (autor_id)
+);
+
+		INSERT INTO autores(nombre, apellido, seudonimo, fecha_nacimiento, genero, pais_origen)
+VALUES  ('Stephen', 'Ewdin', 'King', '1947-09-27', 'M', 'USA'),
+        ('Joanne', 'Rwling', 'J.k Rowling', '1947-09-27', 'F', 'Reino unido');
+/*y tres para el autor con id 1 */
+		INSERT INTO libros(autor_id, titulo,fecha_publicacion pais_origen)
+VALUES  (1 ,'Carries', '1947-09-27'),
+		(1 ,'El misterio de salme lot', '1995-09-27'),
+		(1 ,'El resplando', '1977-09-27'),
+/*7 registros para el autor con id 2 */
+		(2 ,'Harry potter y la piedra Filosofa', '1997-06-30'),
+		(2 ,'Harry potter y Camara secreta', '1998-07-2'),
+	   (2 ,'Harry potter y el prisionero de azkaban', '1999-06-8'),
+		(2 ,'Harry potter y el caliz de fuego', '2000-03-20'),
+	   (2 ,'Harry potter y la orden de fenix', '2003-06-21'),
+		(2 ,'Harry potter y el misterio del principe', '2005-06-16'),
+		(2 ,'Harry potter y las reliquias de la muerte', '2007-07-21'),
+
+
+
+
+
+
+
+
+
+ SELECT * FROM autores;
+
+
+
+
+mysql> SOURCE /users/TATIANA/Desktop/Escritorio 2021-2022/Cursos de codigo facilito/Bases de datos/senten.sql
+Query OK, 2 rows affected (2.89 sec)
+
+Query OK, 1 row affected (0.27 sec)
+
+Database changed
+Query OK, 0 rows affected (1.61 sec)
+
+Query OK, 0 rows affected, 1 warning (1.28 sec)
+
+Query OK, 2 rows affected (0.27 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+Query OK, 10 rows affected (0.32 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
++----------+---------+----------+-------------+--------+------------------+-------------+---------------------+
+| autor_id | nombre  | apellido | seudonimo   | genero | fecha_nacimiento | pais_origen | fecha_creacion      |
++----------+---------+----------+-------------+--------+------------------+-------------+---------------------+
+|        1 | Stephen | Ewdin    | King        | M      | 1947-09-27       | USA         | 2021-11-26 12:07:48 |
+|        2 | Joanne  | Rwling   | J.k Rowling | F      | 1947-09-27       | Reino unido | 2021-11-26 12:07:48 |
++----------+---------+----------+-------------+--------+------------------+-------------+---------------------+
+2 rows in set (0.00 sec)
+
++----------+----------+-------------------------------------------+-------------+--------+-------------------+
+| libro_id | autor_id | titulo                                    | descripcion | pagina | fecha_publicacion |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+
+|        1 |        1 | Carries                                   | NULL        |   NULL | 1974-09-27        |
+|        2 |        1 | El misterio de salme lot                  | NULL        |   NULL | 1995-09-27        |
+|        3 |        1 | El resplando                              | NULL        |   NULL | 1977-09-27        |
+|        4 |        2 | Harry potter y la piedra Filosofa         | NULL        |   NULL | 1997-06-30        |
+|        5 |        2 | Harry potter y Camara secreta             | NULL        |   NULL | 1998-07-02        |
+|        6 |        2 | Harry potter y el prisionero de azkaban   | NULL        |   NULL | 1999-06-08        |
+|        7 |        2 | Harry potter y el caliz de fuego          | NULL        |   NULL | 2000-03-20        |
+|        8 |        2 | Harry potter y la orden de fenix          | NULL        |   NULL | 2003-06-21        |
+|        9 |        2 | Harry potter y el misterio del principe   | NULL        |   NULL | 2005-06-16        |
+|       10 |        2 | Harry potter y las reliquias de la muerte | NULL        |   NULL | 2007-07-21        |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+
+10 rows in set (0.00 sec)
+
+mysql>
+
+
+
+mysql> SOURCE /users/TATIANA/Desktop/Escritorio 2021-2022/Cursos de codigo facilito/Bases de datos/senten.sql
+Query OK, 1 row affected (1.08 sec)
+
+Query OK, 1 row affected (0.36 sec)
+
+Database changed
+Query OK, 0 rows affected (3.30 sec)
+
+Query OK, 0 rows affected, 1 warning (0.97 sec)
+
+Query OK, 2 rows affected (0.34 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+Query OK, 10 rows affected (0.22 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
++----------+---------+----------+-------------+--------+------------------+-------------+---------------------+
+| autor_id | nombre  | apellido | seudonimo   | genero | fecha_nacimiento | pais_origen | fecha_creacion      |
++----------+---------+----------+-------------+--------+------------------+-------------+---------------------+
+|        1 | Stephen | Ewdin    | King        | M      | 1947-09-27       | USA         | 2021-11-26 12:36:52 |
+|        2 | Joanne  | Rwling   | J.k Rowling | F      | 1947-09-27       | Reino unido | 2021-11-26 12:36:52 |
++----------+---------+----------+-------------+--------+------------------+-------------+---------------------+
+2 rows in set (0.00 sec)
+
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                                    | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+|        1 |        1 | Carries                                   | NULL        |   NULL | 1974-09-27        | 2021-11-26 12:36:52 |
+|        2 |        1 | El misterio de salme lot                  | NULL        |   NULL | 1995-09-27        | 2021-11-26 12:36:52 |
+|        3 |        1 | El resplando                              | NULL        |   NULL | 1977-09-27        | 2021-11-26 12:36:52 |
+|        4 |        2 | Harry potter y la piedra Filosofa         | NULL        |   NULL | 1997-06-30        | 2021-11-26 12:36:52 |
+|        5 |        2 | Harry potter y Camara secreta             | NULL        |   NULL | 1998-07-02        | 2021-11-26 12:36:52 |
+|        6 |        2 | Harry potter y el prisionero de azkaban   | NULL        |   NULL | 1999-06-08        | 2021-11-26 12:36:52 |
+|        7 |        2 | Harry potter y el caliz de fuego          | NULL        |   NULL | 2000-03-20        | 2021-11-26 12:36:52 |
+|        8 |        2 | Harry potter y la orden de fenix          | NULL        |   NULL | 2003-06-21        | 2021-11-26 12:36:52 |
+|        9 |        2 | Harry potter y el misterio del principe   | NULL        |   NULL | 2005-06-16        | 2021-11-26 12:36:52 |
+|       10 |        2 | Harry potter y las reliquias de la muerte | NULL        |   NULL | 2007-07-21        | 2021-11-26 12:36:52 |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+10 rows in set (0.00 sec)
+
+
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`libreria_cf`.`libros`, CONSTRAINT `libros_ibfk_1` FOREIGN KEY (`autor_id`) REFERENCES `autores` (`autor_id`))
++----------+---------+----------+-------------+--------+------------------+-------------+---------------------+
+| autor_id | nombre  | apellido | seudonimo   | genero | fecha_nacimiento | pais_origen | fecha_creacion      |
++----------+---------+----------+-------------+--------+------------------+-------------+---------------------+
+|        1 | Stephen | Ewdin    | King        | M      | 1947-09-27       | USA         | 2021-11-26 12:40:03 |
+|        2 | Joanne  | Rwling   | J.k Rowling | F      | 1947-09-27       | Reino unido | 2021-11-26 12:40:03 |
++----------+---------+----------+-------------+--------+------------------+-------------+---------------------+
+2 rows in set (0.00 sec)
+
+Empty set (0.00 sec)
+
+mysql>
+
+
+--------ha este erro se le conoce integridad referencial ya que en este
+ caso no contamos con un autor con un id 100
+
+
+
+Implementación de restricciones
+VALORES ÚNICOS
+Como sabemos, si nosotros necesitamos validar valores únicos usaremos el constraint UNIQUE.
+
+CREATE TABLE usuarios( 
+  usuario_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(50) UNIQUE
+);
+Otra forma de expresarlo, es de la siguiente manera.
+
+CREATE TABLE usuarios( 
+  usuario_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(50),
+  CONSTRAINT UNIQUE (nombre)
+);
+La palabra CONSTRAINT es opcional, sin embargo, por temas de legibilidad recomiendo colocarla.
+
+VALORES MÚTIPLES COLUMNAS
+Si necesitamos validar el valor único de una combinación de columnas lo haremos de la siguiente manera.
+
+En este caso queremos validar que la combinación de nombre, apellido y matricula sean unicas en la tabla.
+
+CREATE TABLE usuarios( 
+  usuario_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  nombre VARCHAR(50),
+  apellido VARCHAR(50),
+  matricula VARCHAR(10),
+  CONSTRAINT unique_combinacion UNIQUE (nombre, apellido, matricula),
+  PRIMARY KEY (usuario_id)
+);
+LLAVES PRIMARIAS
+Existen un par de formas con las cuales nosotros podemos definir un campo como una llave primaria.
+
+CREATE TABLE usuarios( 
+  usuario_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT
+);
+o
+
+CREATE TABLE usuarios( 
+  usuario_id INT UNSIGNED AUTO_INCREMENT,
+  PRIMARY KEY(usuario_id)
+);
+En ambos casos el resultado es el mismo.
+
+Modificar tablas
+
+
+mysql> ALTER TABLE libros ADD ventas INT UNSIGNED NOT NULL;
+Query OK, 0 rows affected (1.45 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
+
+
+
+mysql> ALTER TABLE libros ADD ventas INT UNSIGNED NOT NULL;
+Query OK, 0 rows affected (1.45 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC libros;
++-------------------+--------------+------+-----+-------------------+-------------------+
+| Field             | Type         | Null | Key | Default           | Extra             |
++-------------------+--------------+------+-----+-------------------+-------------------+
+| libro_id          | int unsigned | NO   | PRI | NULL              | auto_increment    |
+| autor_id          | int unsigned | NO   | MUL | NULL              |                   |
+| titulo            | varchar(50)  | NO   |     | NULL              |                   |
+| descripcion       | varchar(250) | YES  |     | NULL              |                   |
+| pagina            | int unsigned | YES  |     | NULL              |                   |
+| fecha_publicacion | date         | NO   |     | NULL              |                   |
+| fecha_creacion    | datetime     | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
+| ventas            | int unsigned | NO   |     | NULL              |                   |
++-------------------+--------------+------+-----+-------------------+-------------------+
+8 rows in set (0.07 sec)
+
+mysql>
+
+
+
+mysql> ALTER TABLE libros ADD ventas INT UNSIGNED NOT NULL;
+Query OK, 0 rows affected (1.45 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC libros;
++-------------------+--------------+------+-----+-------------------+-------------------+
+| Field             | Type         | Null | Key | Default           | Extra             |
++-------------------+--------------+------+-----+-------------------+-------------------+
+| libro_id          | int unsigned | NO   | PRI | NULL              | auto_increment    |
+| autor_id          | int unsigned | NO   | MUL | NULL              |                   |
+| titulo            | varchar(50)  | NO   |     | NULL              |                   |
+| descripcion       | varchar(250) | YES  |     | NULL              |                   |
+| pagina            | int unsigned | YES  |     | NULL              |                   |
+| fecha_publicacion | date         | NO   |     | NULL              |                   |
+| fecha_creacion    | datetime     | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
+| ventas            | int unsigned | NO   |     | NULL              |                   |
++-------------------+--------------+------+-----+-------------------+-------------------+
+8 rows in set (0.07 sec)
+
+mysql> SELECT * FROM libros;
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+--------+
+| libro_id | autor_id | titulo                                    | descripcion | pagina | fecha_publicacion | fecha_creacion      | ventas |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+--------+
+|        1 |        1 | Carries                                   | NULL        |   NULL | 1974-09-27        | 2021-11-26 12:49:26 |      0 |
+|        2 |        1 | El misterio de salme lot                  | NULL        |   NULL | 1995-09-27        | 2021-11-26 12:49:26 |      0 |
+|        3 |        1 | El resplando                              | NULL        |   NULL | 1977-09-27        | 2021-11-26 12:49:26 |      0 |
+|        4 |        2 | Harry potter y la piedra Filosofa         | NULL        |   NULL | 1997-06-30        | 2021-11-26 12:49:26 |      0 |
+|        5 |        2 | Harry potter y Camara secreta             | NULL        |   NULL | 1998-07-02        | 2021-11-26 12:49:26 |      0 |
+|        6 |        2 | Harry potter y el prisionero de azkaban   | NULL        |   NULL | 1999-06-08        | 2021-11-26 12:49:26 |      0 |
+|        7 |        2 | Harry potter y el caliz de fuego          | NULL        |   NULL | 2000-03-20        | 2021-11-26 12:49:26 |      0 |
+|        8 |        2 | Harry potter y la orden de fenix          | NULL        |   NULL | 2003-06-21        | 2021-11-26 12:49:26 |      0 |
+|        9 |        2 | Harry potter y el misterio del principe   | NULL        |   NULL | 2005-06-16        | 2021-11-26 12:49:26 |      0 |
+|       10 |        2 | Harry potter y las reliquias de la muerte | NULL        |   NULL | 2007-07-21        | 2021-11-26 12:49:26 |      0 |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+--------+
+10 rows in set (0.00 sec)
+
+mysql>
+
+
+AGEGAR VALORES POR DEFAUL PPOR CONSOLA
+
+
+mysql> ALTER TABLE libros ADD stock INT UNSIGNED NOT NULL DEFAULT 10;
+Query OK, 0 rows affected (0.59 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
+
+
+
+AGREGA VALOR DE 10 PARA CADA FILA DE LA COLUMNA
+
+
+mysql> ALTER TABLE libros ADD stock INT UNSIGNED NOT NULL DEFAULT 10;
+Query OK, 0 rows affected (0.59 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM libros;
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+--------+-------+
+| libro_id | autor_id | titulo                                    | descripcion | pagina | fecha_publicacion | fecha_creacion      | ventas | stock |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+--------+-------+
+|        1 |        1 | Carries                                   | NULL        |   NULL | 1974-09-27        | 2021-11-26 12:49:26 |      0 |    10 |
+|        2 |        1 | El misterio de salme lot                  | NULL        |   NULL | 1995-09-27        | 2021-11-26 12:49:26 |      0 |    10 |
+|        3 |        1 | El resplando                              | NULL        |   NULL | 1977-09-27        | 2021-11-26 12:49:26 |      0 |    10 |
+|        4 |        2 | Harry potter y la piedra Filosofa         | NULL        |   NULL | 1997-06-30        | 2021-11-26 12:49:26 |      0 |    10 |
+|        5 |        2 | Harry potter y Camara secreta             | NULL        |   NULL | 1998-07-02        | 2021-11-26 12:49:26 |      0 |    10 |
+|        6 |        2 | Harry potter y el prisionero de azkaban   | NULL        |   NULL | 1999-06-08        | 2021-11-26 12:49:26 |      0 |    10 |
+|        7 |        2 | Harry potter y el caliz de fuego          | NULL        |   NULL | 2000-03-20        | 2021-11-26 12:49:26 |      0 |    10 |
+|        8 |        2 | Harry potter y la orden de fenix          | NULL        |   NULL | 2003-06-21        | 2021-11-26 12:49:26 |      0 |    10 |
+|        9 |        2 | Harry potter y el misterio del principe   | NULL        |   NULL | 2005-06-16        | 2021-11-26 12:49:26 |      0 |    10 |
+|       10 |        2 | Harry potter y las reliquias de la muerte | NULL        |   NULL | 2007-07-21        | 2021-11-26 12:49:26 |      0 |    10 |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+--------+-------+
+10 rows in set (0.05 sec)
+
+mysql>
+
+
+
+eliminar una columna 
+
+
+mysql> ALTER TABLE libros DROP  COLUMN stock;
+Query OK, 0 rows affected (5.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
+
+
+
+mysql> ALTER TABLE libros DROP  COLUMN stock;
+Query OK, 0 rows affected (5.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM libros;
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+--------+
+| libro_id | autor_id | titulo                                    | descripcion | pagina | fecha_publicacion | fecha_creacion      | ventas |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+--------+
+|        1 |        1 | Carries                                   | NULL        |   NULL | 1974-09-27        | 2021-11-26 12:49:26 |      0 |
+|        2 |        1 | El misterio de salme lot                  | NULL        |   NULL | 1995-09-27        | 2021-11-26 12:49:26 |      0 |
+|        3 |        1 | El resplando                              | NULL        |   NULL | 1977-09-27        | 2021-11-26 12:49:26 |      0 |
+|        4 |        2 | Harry potter y la piedra Filosofa         | NULL        |   NULL | 1997-06-30        | 2021-11-26 12:49:26 |      0 |
+|        5 |        2 | Harry potter y Camara secreta             | NULL        |   NULL | 1998-07-02        | 2021-11-26 12:49:26 |      0 |
+|        6 |        2 | Harry potter y el prisionero de azkaban   | NULL        |   NULL | 1999-06-08        | 2021-11-26 12:49:26 |      0 |
+|        7 |        2 | Harry potter y el caliz de fuego          | NULL        |   NULL | 2000-03-20        | 2021-11-26 12:49:26 |      0 |
+|        8 |        2 | Harry potter y la orden de fenix          | NULL        |   NULL | 2003-06-21        | 2021-11-26 12:49:26 |      0 |
+|        9 |        2 | Harry potter y el misterio del principe   | NULL        |   NULL | 2005-06-16        | 2021-11-26 12:49:26 |      0 |
+|       10 |        2 | Harry potter y las reliquias de la muerte | NULL        |   NULL | 2007-07-21        | 2021-11-26 12:49:26 |      0 |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+--------+
+10 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+Modificar tablas
+Nosotros podemos modificar la definición de una tabla una vez esta se haya creado, para ello, nos apoyaremos de la sentencia ALTER TABLE.
+
+Aquí un listado de algunas modificaciones que podemos realizar (Las más comunes).
+
+Renombrar tabla.
+
+Renombrar la tabla usuarios por users.
+
+ALTER TABLE usuarios RENAME users;
+Agregar una nueva columna.
+
+Agregar a la tabla usuarios, la columna email de tipo VARCHAR con máximo de 50 caracteres.
+
+ALTER TABLE usuarios ADD email VARCHAR(50);
+Agregar una nueva columna con constraints.
+
+Agregar a la tabla usuarios, la columna email, validando su presencia.
+
+ALTER TABLE usuarios ADD email VARCHAR(50) NOT NULL DEFAULT '';
+Agregar a la tabla usuarios, la columna email, validando su valor único.
+
+ALTER TABLE tabla ADD columna VARCHAR(50) UNIQUE;
+Eliminar una columna
+
+Eliminar la columna email de la tabla usuarios.
+
+ALTER TABLE usuarios DROP COLUMN email;
+Modificar el tipo de dato de una columna
+
+Modificar el tipo de dato de la columna teléfono, (tabla usuarios) de INT a VARCHAR, máximo 50 caracteres.
+
+ALTER TABLE usuarios MODIFY telefono VARCHAR(50);
+Generar una llave primaria.
+
+Generar una llave primaria a la tabla usuarios.
+
+ALTER TABLE usuarios ADD id INT UNSIGNED NOT NULL AUTO_INCREMENT, ADD PRIMARY KEY (id);
+Agregar llave foránea.
+
+Agregar una llave foranea a la tabla usuarios, con referencia a la tabla grupos.
+
+ALTER TABLE usuarios ADD FOREIGN KEY(grupo_id) REFERENCES grupos(grupo_id);
+Eliminar llaves foráneas
+
+Eliminar la llave foranea grupo_id de la tabla usuarios.
+
+ALTER TABLE usuarios DROP FOREIGN KEY grupo_id;
+
+
+
+
+
+¿Cómo se ejecutan las sentencias SQL?
+
+loguearnos en el servido con las 
+Vanderas 
+mysql -u root -p para d
+la u= el usuario que vamos a utlizar
+-p =indicando que vamos a colocar una contraseña para autenticarnos
+
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u root -p
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 25
+Server version: 8.0.27 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql>
+
+ ESTOY PARA SABER QUE EL SERVIDOR HA VALIDA EL USURAUIO Y LA CONTRASEÑA 
+
+EN MYSQL EN CADA CONECCION SE LES ASIGNA UN ID UNICO POR CADA SESION Y LA CONTABILIZA
+
+
+
+--------   Obtener registros mediante condiciones
+
+
+
+mysql> SOURCE /users/TATIANA/Desktop/Escritorio 2021-2022/Cursos de codigo facilito/Bases de datos/senten.sql
+Query OK, 2 rows affected (4.34 sec)
+
+Query OK, 1 row affected (0.26 sec)
+
+Database changed
+Query OK, 0 rows affected (1.04 sec)
+
+Query OK, 0 rows affected, 1 warning (1.35 sec)
+
+Query OK, 2 rows affected (0.14 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+Query OK, 10 rows affected (0.21 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
++----------+---------+----------+-------------+--------+------------------+-------------+---------------------+
+| autor_id | nombre  | apellido | seudonimo   | genero | fecha_nacimiento | pais_origen | fecha_creacion      |
++----------+---------+----------+-------------+--------+------------------+-------------+---------------------+
+|        1 | Stephen | Ewdin    | King        | M      | 1947-09-27       | USA         | 2021-11-26 13:19:00 |
+|        2 | Joanne  | Rwling   | J.k Rowling | F      | 1947-09-27       | Reino unido | 2021-11-26 13:19:00 |
++----------+---------+----------+-------------+--------+------------------+-------------+---------------------+
+2 rows in set (0.00 sec)
+
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                                    | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+|        1 |        1 | Carries                                   | NULL        |   NULL | 1974-09-27        | 2021-11-26 13:19:01 |
+|        2 |        1 | El misterio de salme lot                  | NULL        |   NULL | 1995-09-27        | 2021-11-26 13:19:01 |
+|        3 |        1 | El resplando                              | NULL        |   NULL | 1977-09-27        | 2021-11-26 13:19:01 |
+|        4 |        2 | Harry potter y la piedra Filosofa         | NULL        |   NULL | 1997-06-30        | 2021-11-26 13:19:01 |
+|        5 |        2 | Harry potter y Camara secreta             | NULL        |   NULL | 1998-07-02        | 2021-11-26 13:19:01 |
+|        6 |        2 | Harry potter y el prisionero de azkaban   | NULL        |   NULL | 1999-06-08        | 2021-11-26 13:19:01 |
+|        7 |        2 | Harry potter y el caliz de fuego          | NULL        |   NULL | 2000-03-20        | 2021-11-26 13:19:01 |
+|        8 |        2 | Harry potter y la orden de fenix          | NULL        |   NULL | 2003-06-21        | 2021-11-26 13:19:01 |
+|        9 |        2 | Harry potter y el misterio del principe   | NULL        |   NULL | 2005-06-16        | 2021-11-26 13:19:01 |
+|       10 |        2 | Harry potter y las reliquias de la muerte | NULL        |   NULL | 2007-07-21        | 2021-11-26 13:19:01 |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+10 rows in set (0.00 sec)
+
+mysql> SOURCE /users/TATIANA/Desktop/Escritorio 2021-2022/Cursos de codigo facilito/Bases de datos/senten.sql
+
+
+
+
+mysql> SELECT * FROM libros\G;
+*************************** 1. row ***************************
+         libro_id: 1
+         autor_id: 1
+           titulo: Carries
+      descripcion: NULL
+           pagina: NULL
+fecha_publicacion: 1974-09-27
+   fecha_creacion: 2021-11-26 13:19:01
+*************************** 2. row ***************************
+         libro_id: 2
+         autor_id: 1
+           titulo: El misterio de salme lot
+      descripcion: NULL
+           pagina: NULL
+fecha_publicacion: 1995-09-27
+   fecha_creacion: 2021-11-26 13:19:01
+*************************** 3. row ***************************
+         libro_id: 3
+         autor_id: 1
+           titulo: El resplando
+      descripcion: NULL
+           pagina: NULL
+fecha_publicacion: 1977-09-27
+   fecha_creacion: 2021-11-26 13:19:01
+*************************** 4. row ***************************
+         libro_id: 4
+         autor_id: 2
+           titulo: Harry potter y la piedra Filosofa
+      descripcion: NULL
+           pagina: NULL
+fecha_publicacion: 1997-06-30
+   fecha_creacion: 2021-11-26 13:19:01
+*************************** 5. row ***************************
+         libro_id: 5
+         autor_id: 2
+           titulo: Harry potter y Camara secreta
+      descripcion: NULL
+           pagina: NULL
+fecha_publicacion: 1998-07-02
+   fecha_creacion: 2021-11-26 13:19:01
+*************************** 6. row ***************************
+         libro_id: 6
+         autor_id: 2
+           titulo: Harry potter y el prisionero de azkaban
+      descripcion: NULL
+           pagina: NULL
+fecha_publicacion: 1999-06-08
+   fecha_creacion: 2021-11-26 13:19:01
+*************************** 7. row ***************************
+         libro_id: 7
+         autor_id: 2
+           titulo: Harry potter y el caliz de fuego
+      descripcion: NULL
+           pagina: NULL
+fecha_publicacion: 2000-03-20
+   fecha_creacion: 2021-11-26 13:19:01
+*************************** 8. row ***************************
+         libro_id: 8
+         autor_id: 2
+           titulo: Harry potter y la orden de fenix
+      descripcion: NULL
+           pagina: NULL
+fecha_publicacion: 2003-06-21
+   fecha_creacion: 2021-11-26 13:19:01
+*************************** 9. row ***************************
+         libro_id: 9
+         autor_id: 2
+           titulo: Harry potter y el misterio del principe
+      descripcion: NULL
+           pagina: NULL
+fecha_publicacion: 2005-06-16
+   fecha_creacion: 2021-11-26 13:19:01
+*************************** 10. row ***************************
+         libro_id: 10
+         autor_id: 2
+           titulo: Harry potter y las reliquias de la muerte
+      descripcion: NULL
+           pagina: NULL
+fecha_publicacion: 2007-07-21
+   fecha_creacion: 2021-11-26 13:19:01
+10 rows in set (0.00 sec)
+
+ERROR:
+No query specified
+---
+CAMBIA LA FORMA DE VISUALIZACION DE DATOS O INFO 
+mysql> SELECT * FROM libros\G;
+
+
+
+Obtener registros mediante condiciones
+
+COLUMNAS EN ESPECIFICOS
+
+
+mysql> SELECT libro_id , titulo FROM libros;
++----------+-------------------------------------------+
+| libro_id | titulo                                    |
++----------+-------------------------------------------+
+|        1 | Carries                                   |
+|        2 | El misterio de salme lot                  |
+|        3 | El resplando                              |
+|        4 | Harry potter y la piedra Filosofa         |
+|        5 | Harry potter y Camara secreta             |
+|        6 | Harry potter y el prisionero de azkaban   |
+|        7 | Harry potter y el caliz de fuego          |
+|        8 | Harry potter y la orden de fenix          |
+|        9 | Harry potter y el misterio del principe   |
+|       10 | Harry potter y las reliquias de la muerte |
++----------+-------------------------------------------+
+10 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+
+codiciones donde el titulo se ha igual al nombre 
+utlizando Where y visualizar un unico registro
+mysql> SELECT * FROM libros WHERE titulo = 'Carries';
++----------+----------+---------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo  | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+---------+-------------+--------+-------------------+---------------------+
+|        1 |        1 | Carries | NULL        |   NULL | 1974-09-27        | 2021-11-26 13:19:01 |
++----------+----------+---------+-------------+--------+-------------------+---------------------+
+1 row in set (0.00 sec)
+
+
+
+
+codiciones donde el titulo se ha igual al nombre 
+utlizando Where y visualizar un unico registro
+mysql>
+
+
+
+
+
+
+/*
+
+-- < menor que
+-- > mayor que
+-- <= menor igual
+-- >= mayor igual
+= igual que 
+dos formas de firente
+1 != diferente que 
+2 <> diferenten que 
+
+
+
+
+
+ */
+
+
+Operadores lógicos
+
+
+
+ADN
+
+OR
+
+NOT
+
+
+
+EJEMPLO OBTENR TODOS LOS LIBROS,
+
+
+SELECT * FROM libros WHERE titulo = 'Carries' ADN autor_id = 1;
+
+
+mysql>  SELECT * FROM libros WHERE titulo = 'Carries' AND autor_id = 1;
++----------+----------+---------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo  | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+---------+-------------+--------+-------------------+---------------------+
+|        1 |        1 | Carries | NULL        |   NULL | 1974-09-27        | 2021-11-26 13:19:01 |
++----------+----------+---------+-------------+--------+-------------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+| libro_id | autor_id | titulo  | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+---------+-------------+--------+-------------------+---------------------+
+|        1 |        1 | Carries | NULL        |   NULL | 1974-09-27        | 2021-11-26 13:19:01 |
++----------+----------+---------+-------------+--------+-------------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql>
+ solo un registro cumple con esas dos condiciones
+
+
+
+mysql>  SELECT * FROM libros WHERE titulo = 'Carries' AND autor_id = 11;
+Empty set (0.00 sec)
+
+mysql> no visualizamos ningun resultado
+
+
+
+
+
+
++----------+----------+----------------------------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                           | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+----------------------------------+-------------+--------+-------------------+---------------------+
+|        1 |        1 | Carries                          | NULL        |   NULL | 1974-09-27        | 2021-11-26 16:53:56 |
+|        8 |        2 | Harry potter y la orden de fenix | NULL        |   NULL | 2003-06-21        | 2021-11-26 16:53:56 |
++----------+----------+----------------------------------+-------------+--------+-------------------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+SELECT * FROM libros WHERE (autor_id = 1 AND titulo = 'Carries') OR (autor_id = 2 AND titulo = 'Harry potter y la orden de fenix');
+
+
+Registros nulos
+
+
+
+no representan ningun tipo de datos
+
+
+
+
+mysql> SELECT * FROM autores WHERE seudonimo = NULL;
+Empty set (0.04 secmysql>
+
+
+
+
+
+mysql> SELECT * FROM libros WHERE pagina IS NULL;
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                                    | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+|        1 |        1 | Carries                                   | NULL        |   NULL | 1974-09-27        | 2021-11-26 17:15:58 |
+|        2 |        1 | El misterio de salme lot                  | NULL        |   NULL | 1995-09-27        | 2021-11-26 17:15:58 |
+|        3 |        1 | El resplando                              | NULL        |   NULL | 1977-09-27        | 2021-11-26 17:15:58 |
+|        4 |        2 | Harry potter y la piedra Filosofa         | NULL        |   NULL | 1997-06-30        | 2021-11-26 17:15:58 |
+|        5 |        2 | Harry potter y Camara secreta             | NULL        |   NULL | 1998-07-02        | 2021-11-26 17:15:58 |
+|        6 |        2 | Harry potter y el prisionero de azkaban   | NULL        |   NULL | 1999-06-08        | 2021-11-26 17:15:58 |
+|        7 |        2 | Harry potter y el caliz de fuego          | NULL        |   NULL | 2000-03-20        | 2021-11-26 17:15:58 |
+|        8 |        2 | Harry potter y la orden de fenix          | NULL        |   NULL | 2003-06-21        | 2021-11-26 17:15:58 |
+|        9 |        2 | Harry potter y el misterio del principe   | NULL        |   NULL | 2005-06-16        | 2021-11-26 17:15:58 |
+|       10 |        2 | Harry potter y las reliquias de la muerte | NULL        |   NULL | 2007-07-21        | 2021-11-26 17:15:58 |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+10 rows in set (0.00 sec)
+
+mysql>
+ si hay registros nulos
+
+
+
+
+
+mysql> SELECT * FROM autores WHERE seudonimo IS NOT NULL;
++----------+---------+----------+-----------+--------+------------------+-------------+---------------------+
+| autor_id | nombre  | apellido | seudonimo | genero | fecha_nacimiento | pais_origen | fecha_creacion      |
++----------+---------+----------+-----------+--------+------------------+-------------+---------------------+
+|        2 | Joanne  | Rwling   |           | F      | 1947-09-27       | Reino unido | 2021-11-26 17:15:58 |
+|        1 | Stephen | Ewdin    | King      | M      | 1947-09-27       | USA         | 2021-11-26 17:15:58 |
++----------+---------+----------+-----------+--------+------------------+-------------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql>
+   
+
+
+ que no poseee valores nulos
+
+
+este operador tambien se utiliza para decir que me muestre todos los null
+operador de seguridad
+
+
+mysql> SELECT * FROM libros WHERE pagina <=> NULL;
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                                    | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+|        1 |        1 | Carries                                   | NULL        |   NULL | 1974-09-27        | 2021-11-26 17:15:58 |
+|        2 |        1 | El misterio de salme lot                  | NULL        |   NULL | 1995-09-27        | 2021-11-26 17:15:58 |
+|        3 |        1 | El resplando                              | NULL        |   NULL | 1977-09-27        | 2021-11-26 17:15:58 |
+|        4 |        2 | Harry potter y la piedra Filosofa         | NULL        |   NULL | 1997-06-30        | 2021-11-26 17:15:58 |
+|        5 |        2 | Harry potter y Camara secreta             | NULL        |   NULL | 1998-07-02        | 2021-11-26 17:15:58 |
+|        6 |        2 | Harry potter y el prisionero de azkaban   | NULL        |   NULL | 1999-06-08        | 2021-11-26 17:15:58 |
+|        7 |        2 | Harry potter y el caliz de fuego          | NULL        |   NULL | 2000-03-20        | 2021-11-26 17:15:58 |
+|        8 |        2 | Harry potter y la orden de fenix          | NULL        |   NULL | 2003-06-21        | 2021-11-26 17:15:58 |
+|        9 |        2 | Harry potter y el misterio del principe   | NULL        |   NULL | 2005-06-16        | 2021-11-26 17:15:58 |
+|       10 |        2 | Harry potter y las reliquias de la muerte | NULL        |   NULL | 2007-07-21        | 2021-11-26 17:15:58 |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+10 rows in set (0.00 sec)
+
+mysql>
+
+
+
+Registros mediante rangos
+
+
+
+para ver mucho mejor los datos que estas relacionando en la consulta
+
+mysql> SELECT titulo, fecha_publicacion FROM libros WHERE fecha_publicacion BETWEEN '1995-01-01' AND '2005-01-31';
++-----------------------------------------+-------------------+
+| titulo                                  | fecha_publicacion |
++-----------------------------------------+-------------------+
+| El misterio de salme lot                | 1995-09-27        |
+| Harry potter y la piedra Filosofa       | 1997-06-30        |
+| Harry potter y Camara secreta           | 1998-07-02        |
+| Harry potter y el prisionero de azkaban | 1999-06-08        |
+| Harry potter y el caliz de fuego        | 2000-03-20        |
+| Harry potter y la orden de fenix        | 2003-06-21        |
++-----------------------------------------+-------------------+
+6 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+Búsqueda por listas
+
+
+ODTENEMOS 
+EL
+
+mysql> SELECT * FROM libros WHERE titulo = 'Harry potter y la orden de fenix' OR
+    -> titulo = 'Harry potter y el misterio del principe'
+    -> OR titulo = 'Harry potter y las reliquias de la muerte'
+    -> OR titulo = 'Harry potter y el prisionero de azkaban';
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+| libro_id | autor_id | titulo                                    | descripcion | pagina | fecha_publicacion | fecha_creacion      |+----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+|        6 |        2 | Harry potter y el prisionero de azkaban   | NULL        |   NULL | 1999-06-08        | 2021-11-26 17:15:58 ||        8 |        2 | Harry potter y la orden de fenix          | NULL        |   NULL | 2003-06-21        | 2021-11-26 17:15:58 ||        9 |        2 | Harry potter y el misterio del principe   | NULL        |   NULL | 2005-06-16        | 2021-11-26 17:15:58 ||       10 |        2 | Harry potter y las reliquias de la muerte | NULL        |   NULL | 2007-07-21        | 2021-11-26 17:15:58 |+----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+4 rows in set (0.00 sec)
+
+mysql>
+
+
+
+SELECT * FROM libros WHERE titulo = 'Harry potter y la orden de fenix' OR
+titulo = 'Harry potter y el misterio del principe'
+OR titulo = 'Harry potter y las reliquias de la muerte'
+OR titulo = 'Harry potter y el prisionero de azkaban';
+
+
+
+
+
+
+
+BUSQUEDA OPTIMIZADA CON LA CLAUSULA (IN)
+
+
+mysql> SELECT * FROM libros WHERE titulo IN (
+    -> 'Harry potter y la piedra Filosofa',
+    -> 'Harry potter y Camara secreta',
+    -> 'Harry potter y el prisionero de azkaban',
+    -> 'Harry potter y el caliz de fuego',
+    -> 'Harry potter y la orden de fenix');
++----------+----------+-----------------------------------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                                  | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+-----------------------------------------+-------------+--------+-------------------+---------------------+
+|        4 |        2 | Harry potter y la piedra Filosofa       | NULL        |   NULL | 1997-06-30        | 2021-11-26 17:15:58 |
+|        5 |        2 | Harry potter y Camara secreta           | NULL        |   NULL | 1998-07-02        | 2021-11-26 17:15:58 |
+|        6 |        2 | Harry potter y el prisionero de azkaban | NULL        |   NULL | 1999-06-08        | 2021-11-26 17:15:58 |
+|        7 |        2 | Harry potter y el caliz de fuego        | NULL        |   NULL | 2000-03-20        | 2021-11-26 17:15:58 |
+|        8 |        2 | Harry potter y la orden de fenix        | NULL        |   NULL | 2003-06-21        | 2021-11-26 17:15:58 |
++----------+----------+-----------------------------------------+-------------+--------+-------------------+---------------------+
+5 rows in set (0.00 sec)
+
+mysql>
+
+
+CLAUSULA PARA VALORES UNICOS Y NO REPETIDOS
+DISTINCT
+
+PERO EN ESTA TABLA NO HAY VALORES REPETIDOS
+
+
+mysql> SELECT DISTINCT * FROM libros;
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                                    | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+|        1 |        1 | Carries                                   | NULL        |   NULL | 1974-09-27        | 2021-11-26 17:15:58 |
+|        2 |        1 | El misterio de salme lot                  | NULL        |   NULL | 1995-09-27        | 2021-11-26 17:15:58 |
+|        3 |        1 | El resplando                              | NULL        |   NULL | 1977-09-27        | 2021-11-26 17:15:58 |
+|        4 |        2 | Harry potter y la piedra Filosofa         | NULL        |   NULL | 1997-06-30        | 2021-11-26 17:15:58 |
+|        5 |        2 | Harry potter y Camara secreta             | NULL        |   NULL | 1998-07-02        | 2021-11-26 17:15:58 |
+|        6 |        2 | Harry potter y el prisionero de azkaban   | NULL        |   NULL | 1999-06-08        | 2021-11-26 17:15:58 |
+|        7 |        2 | Harry potter y el caliz de fuego          | NULL        |   NULL | 2000-03-20        | 2021-11-26 17:15:58 |
+|        8 |        2 | Harry potter y la orden de fenix          | NULL        |   NULL | 2003-06-21        | 2021-11-26 17:15:58 |
+|        9 |        2 | Harry potter y el misterio del principe   | NULL        |   NULL | 2005-06-16        | 2021-11-26 17:15:58 |
+|       10 |        2 | Harry potter y las reliquias de la muerte | NULL        |   NULL | 2007-07-21        | 2021-11-26 17:15:58 |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+10 rows in set (0.00 sec)
+
+
+
+no registros de valores repetido
+
+
+
+mysql> SELECT DISTINCT titulo FROM libros;
++-------------------------------------------+
+| titulo                                    |
++-------------------------------------------+
+| Carries                                   |
+| El misterio de salme lot                  |
+| El resplando                              |
+| Harry potter y la piedra Filosofa         |
+| Harry potter y Camara secreta             |
+| Harry potter y el prisionero de azkaban   |
+| Harry potter y el caliz de fuego          |
+| Harry potter y la orden de fenix          |
+| Harry potter y el misterio del principe   |
+| Harry potter y las reliquias de la muerte |
++-------------------------------------------+
+10 rows in set (0.08 sec)
+
+mysql>
+mysql>
+
+alias a nombre 
+
+
+
+AS  asignar alias
+
+
+
+
+mysql> SELECT autor_id AS autor, titulo AS nombre FROM libros;
++-------+-------------------------------------------+
+| autor | nombre                                    |
++-------+-------------------------------------------+
+|     1 | Carries                                   |
+|     1 | El misterio de salme lot                  |
+|     1 | El resplando                              |
+|     2 | Harry potter y la piedra Filosofa         |
+|     2 | Harry potter y Camara secreta             |
+|     2 | Harry potter y el prisionero de azkaban   |
+|     2 | Harry potter y el caliz de fuego          |
+|     2 | Harry potter y la orden de fenix          |
+|     2 | Harry potter y el misterio del principe   |
+|     2 | Harry potter y las reliquias de la muerte |
++-------+-------------------------------------------+
+10 rows in set (0.00 sec)
+
+mysql>
+
+
+
+mysql> SELECT 9 * 10;
++--------+
+| 9 * 10 |
++--------+
+|     90 |
++--------+
+1 row in set (0.04 sec)
+
+mysql>
+
+
+
+
+
+mysql> SELECT 9 * 10 AS resultado;
++-----------+
+| resultado |
++-----------+
+|        90 |
++-----------+
+1 row in set (0.00 sec)
+
+
+
+
+
+tambien se puede colocxaer alias sin necesidad de AS
+
+
+mysql> SELECT 9 * 10 resultado;
++-----------+
+| resultado |
++-----------+
+|        90 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql>
+
+
+
+
+actualizar registros
+
+el cambio se aplica para tods los registros
+
+
+mysql> UPDATE libros SET descripcion = 'nueva descripcion', pagina = 100;
+Query OK, 10 rows affected (0.14 sec)
+Rows matched: 10  Changed: 10  Warnings: 0
+
+mysql>
+
+
+
+un registro en particular 
+
+un solo registro puntual
+
+mysql> UPDATE libros SET descripcion = 'nuevo cambio', pagina  = 50 WHERE titulo = 'Harry potter y el prisionero de azkaban';
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>
+
+
+
+
+
+mysql> SELECT * FROM libros;
++----------+----------+-------------------------------------------+-------------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                                    | descripcion       | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+-------------------------------------------+-------------------+--------+-------------------+---------------------+
+|        1 |        1 | Carries                                   | nueva descripcion |    100 | 1974-09-27        | 2021-11-27 07:34:38 |
+|        2 |        1 | El misterio de salme lot                  | nueva descripcion |    100 | 1995-09-27        | 2021-11-27 07:34:38 |
+|        3 |        1 | El resplando                              | nueva descripcion |    100 | 1977-09-27        | 2021-11-27 07:34:38 |
+|        4 |        2 | Harry potter y la piedra Filosofa         | nueva descripcion |    100 | 1997-06-30        | 2021-11-27 07:34:38 |
+|        5 |        2 | Harry potter y Camara secreta             | nueva descripcion |    100 | 1998-07-02        | 2021-11-27 07:34:38 |
+|        6 |        2 | Harry potter y el prisionero de azkaban   | nuevo cambio      |     50 | 1999-06-08        | 2021-11-27 07:34:38 |
+|        7 |        2 | Harry potter y el caliz de fuego          | nueva descripcion |    100 | 2000-03-20        | 2021-11-27 07:34:38 |
+|        8 |        2 | Harry potter y la orden de fenix          | nueva descripcion |    100 | 2003-06-21        | 2021-11-27 07:34:38 |
+|        9 |        2 | Harry potter y el misterio del principe   | nueva descripcion |    100 | 2005-06-16        | 2021-11-27 07:34:38 |
+|       10 |        2 | Harry potter y las reliquias de la muerte | nueva descripcion |    100 | 2007-07-21        | 2021-11-27 07:34:38 |
++----------+----------+-------------------------------------------+-------------------+--------+-------------------+---------------------+
+10 rows in set (0.05 sec)
+
+
+forma correcta de hacer cambio directo con el id de de la fila 
+
+
+
+mysql> UPDATE libros SET descripcion = 'nuevo cambio', pagina  = 50 WHERE libro_id = 6;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+mysql>
+
+
+
+Eliminar registros
+
+si no coloco condicion se eliminar todo el registro
+DELETE FROM libros;
+
+eliminar un elemneto en particular 
+mysql> DELETE FROM libros WHERE autor_id = 2;   
+varios por que estamos aapuntando  al el autor id
+
+
+mysql> DELETE FROM libros WHERE autor_id = 2
+    -> ;
+Query OK, 7 rows affected (0.22 sec)
+
+mysql>
+
+
+
+mysql> DELETE FROM libros WHERE libro_id = 6; 
+
+un libro en particular
+
+
+
+
+mysql> DELETE FROM libros WHERE libro_id = 6;
+Query OK, 1 row affected (0.14 sec)
+
+mysql>
+
+
+
+mysql> SELECT * FROM libros;
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                                    | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+|        1 |        1 | Carries                                   | NULL        |   NULL | 1974-09-27        | 2021-11-27 08:12:50 |
+|        2 |        1 | El misterio de salme lot                  | NULL        |   NULL | 1995-09-27        | 2021-11-27 08:12:50 |
+|        3 |        1 | El resplando                              | NULL        |   NULL | 1977-09-27        | 2021-11-27 08:12:50 |
+|        4 |        2 | Harry potter y la piedra Filosofa         | NULL        |   NULL | 1997-06-30        | 2021-11-27 08:12:50 |
+|        5 |        2 | Harry potter y Camara secreta             | NULL        |   NULL | 1998-07-02        | 2021-11-27 08:12:50 |
+|        7 |        2 | Harry potter y el caliz de fuego          | NULL        |   NULL | 2000-03-20        | 2021-11-27 08:12:50 |
+|        8 |        2 | Harry potter y la orden de fenix          | NULL        |   NULL | 2003-06-21        | 2021-11-27 08:12:50 |
+|        9 |        2 | Harry potter y el misterio del principe   | NULL        |   NULL | 2005-06-16        | 2021-11-27 08:12:50 |
+|       10 |        2 | Harry potter y las reliquias de la muerte | NULL        |   NULL | 2007-07-21        | 2021-11-27 08:12:50 |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+9 rows in set (0.05 sec)
+
+mysql>mysql> DELETE * FROM libros;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* FROM libros' at line 1
+mysql> DELETE FROM libros;s;
+Query OK, 9 rows affected (0.18 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 's' at line 1
+mysql> DELETE FROM libros;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+
+
+SE ELIMINO TODA LA TABLA DE LIBROS
+
+NO HAY REGISTROS
+
+
+mysql> SELECT * FROM libros;
+Empty set (0.00 sec)
+
+mysql>
+
+
+Eliminación en cascada
+ NO ES POSIBLE EJECUTAR ESTA EJEUCCCION Y SE DEBE AL CONSTREINS
+
+mysql> DELETE FROM autores WHERE autor_id = 1;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`libreria_cf`.`libros`, CONSTRAINT `libros_ibfk_1` FOREIGN KEY (`autor_id`) REFERENCES `autores` (`autor_id`))
+mysql>
+
+
+
+se elimina primero las referencias 
+mysql> DELETE FROM libros WHERE autor_id = 1;
+Query OK, 3 rows affected (0.26 sec)
+
+mysql>
+
+ y luego sy podemos elimniar la relacion de id
+o sea el id de libros
+
+mysql> DELETE FROM autores WHERE autor_id = 1;
+Query OK, 1 row affected (0.18 sec)
+
+mysql>
+
+
+AHORA SI SE ELIMINO YA QUE SE COLOCO LA SENTENCIA DESDE SU CREACION 
+ON DELETE CASCADE
+
+mysql> DELETE FROM autores WHERE autor_id = 1;
+Query OK, 1 row affected (0.14 sec)
+
+mysql>
+
+
+mysql> DELETE FROM autores WHERE autor_id = 1;
+Query OK, 1 row affected (0.14 sec)
+
+mysql> SELECT * FROM libros;
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                                    | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+|        4 |        2 | Harry potter y la piedra Filosofa         | NULL        |   NULL | 1997-06-30        | 2021-11-27 08:32:36 |
+|        5 |        2 | Harry potter y Camara secreta             | NULL        |   NULL | 1998-07-02        | 2021-11-27 08:32:36 |
+|        6 |        2 | Harry potter y el prisionero de azkaban   | NULL        |   NULL | 1999-06-08        | 2021-11-27 08:32:36 |
+|        7 |        2 | Harry potter y el caliz de fuego          | NULL        |   NULL | 2000-03-20        | 2021-11-27 08:32:36 |
+|        8 |        2 | Harry potter y la orden de fenix          | NULL        |   NULL | 2003-06-21        | 2021-11-27 08:32:36 |
+|        9 |        2 | Harry potter y el misterio del principe   | NULL        |   NULL | 2005-06-16        | 2021-11-27 08:32:36 |
+|       10 |        2 | Harry potter y las reliquias de la muerte | NULL        |   NULL | 2007-07-21        | 2021-11-27 08:32:36 |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+7 rows in set (0.00 sec)
+
+mysql>
+
+
+vemos como se elimino el autor
+
+mysql> SELECT * FROM autores;
++----------+--------+----------+-------------+--------+------------------+-------------+---------------------+
+| autor_id | nombre | apellido | seudonimo   | genero | fecha_nacimiento | pais_origen | fecha_creacion      |
++----------+--------+----------+-------------+--------+------------------+-------------+---------------------+
+|        2 | Joanne | Rwling   | J.k Rowling | F      | 1947-09-27       | Reino unido | 2021-11-27 08:32:35 |
++----------+--------+----------+-------------+--------+------------------+-------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql>
+la eliminacion se hizo en cascasa
+
+
+
+
+
+
+Restaurar definición de una tabla
+
+
+
+
+SENTENCIA :     TRUNCATE
+
+se elimino 
+
+mysql> TRUNCATE TABLE libros;
+Query OK, 0 rows affected (2.39 sec)
+vacia ya que es el mismo resusltado de haber ejecutado el delete
+si haber colocado n de condiciones
+
+
+mysql> SELECT * FROM libros;
+Empty set (0.09 sec)
+
+mysql>
+
+insert nuevo registro
+mysql> INSERT INTO libros(autor_id, titulo , fecha_publicacion) VALUES(1, 'Nuevo libro', '1974-04-01');
+Query OK, 1 row affected (0.34 sec)
+
+mysql>
+
+
+mysql> SELECT * FROM libros;
++----------+----------+-------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo      | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+-------------+-------------+--------+-------------------+---------------------+
+|        1 |        1 | Nuevo libro | NULL        |   NULL | 1974-04-01        | 2021-11-27 08:52:50 |
++----------+----------+-------------+-------------+--------+-------------------+---------------------+
+1 row in set (0.05 sec)
+
+mysql>
+
+
+
+mysql> DELETE FROM libros;
+Query OK, 1 row affected (0.32 sec)
+
+mysql> SELECT * FROM libros;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO libros(autor_id, titulo , fecha_publicacion) VALUES(1, 'Nuevo libro', '1974-04-01');
+Query OK, 1 row affected (0.17 sec)
+
+mysql> SELECT * FROM libros;
++----------+----------+-------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo      | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+-------------+-------------+--------+-------------------+---------------------+
+|        2 |        1 | Nuevo libro | NULL        |   NULL | 1974-04-01        | 2021-11-27 08:54:58 |
++----------+----------+-------------+-------------+--------+-------------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+ELIMINA SOLO LOS REGISTROS LOS METADATOS SE CONSERVAN
+OJO CON ESO
+
+
+
+
+
+
+Funciones sobre strings
+
+mysql> SELECT CONCAT(nombre , apellido) FROM autores;
++---------------------------+
+| CONCAT(nombre , apellido) |
++---------------------------+
+| StephenEwdin              |
+| JoanneRwling              |
++---------------------------+
+2 rows in set (0.07 sec)
+
+mysql>
+
+ se hizo la concatenacion pero no se esta agegando un espacio en el nombre veamos
+
+mysql> SELECT CONCAT(nombre ," ", apellido) FROM autores;
++-------------------------------+
+| CONCAT(nombre ," ", apellido) |
++-------------------------------+
+| Stephen Ewdin                 |
+| Joanne Rwling                 |
++-------------------------------+
+2 rows in set (0.00 sec)
+
+mysql>
+ahora si vemos un mejor formato por un espacio 
+
+
+
+
+
+mysql> SELECT CONCAT(nombre ," ", apellido) AS nombre_completo FROM autores;
++-----------------+
+| nombre_completo |
++-----------------+
+| Stephen Ewdin   |
+| Joanne Rwling   |
++-----------------+
+2 rows in set (0.00 sec)
+
+mysql>
+
+hola mundo con 10  caracteres
+
+mysql> SELECT LENGTH("hola mundo");
++----------------------+
+| LENGTH("hola mundo") |
++----------------------+
+|                   10 |
++----------------------+
+1 row in set (0.03 sec)
+
+mysql>
+
+
+
+condiciones 
+
+
+mysql>
+mysql> SELECT * FROM libros WHERE LENGTH(titulo) > 15;
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                                    | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+|        2 |        1 | El misterio de salme lot                  | NULL        |   NULL | 1995-09-27        | 2021-11-27 11:39:07 |
+|        4 |        2 | Harry potter y la piedra Filosofa         | NULL        |   NULL | 1997-06-30        | 2021-11-27 11:39:07 |
+|        5 |        2 | Harry potter y Camara secreta             | NULL        |   NULL | 1998-07-02        | 2021-11-27 11:39:07 |
+|        6 |        2 | Harry potter y el prisionero de azkaban   | NULL        |   NULL | 1999-06-08        | 2021-11-27 11:39:07 |
+|        7 |        2 | Harry potter y el caliz de fuego          | NULL        |   NULL | 2000-03-20        | 2021-11-27 11:39:07 |
+|        8 |        2 | Harry potter y la orden de fenix          | NULL        |   NULL | 2003-06-21        | 2021-11-27 11:39:07 |
+|        9 |        2 | Harry potter y el misterio del principe   | NULL        |   NULL | 2005-06-16        | 2021-11-27 11:39:07 |
+|       10 |        2 | Harry potter y las reliquias de la muerte | NULL        |   NULL | 2007-07-21        | 2021-11-27 11:39:07 |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT * FROM libros WHERE LENGTH(titulo) < 15;
++----------+----------+--------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo       | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+--------------+-------------+--------+-------------------+---------------------+
+|        1 |        1 | Carries      | NULL        |   NULL | 1974-09-27        | 2021-11-27 11:39:07 |
+|        3 |        1 | El resplando | NULL        |   NULL | 1977-09-27        | 2021-11-27 11:39:07 |
++----------+----------+--------------+-------------+--------+-------------------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql>
+
+
+
+mysql> SELECT UPPER (nombre), LOWER(nombre) FROM autores;
++----------------+---------------+
+| UPPER (nombre) | LOWER(nombre) |
++----------------+---------------+
+| STEPHEN        | stephen       |
+| JOANNE         | joanne        |
++----------------+---------------+
+2 rows in set (0.11 sec)
+
+mysql>
+
+
+
+
+
+mysql> SELECT TRIM("     hola soy un cadena de characters    ");
++---------------------------------------------------+
+| TRIM("     hola soy un cadena de characters    ") |
++---------------------------------------------------+
+| hola soy un cadena de characters                  |
++---------------------------------------------------+
+1 row in set (0.04 sec)
+
+mysql>
+
+
+
+
+
++----------------------+--------------------+
+| substrings_izquierdo | substrings_derecho |
++----------------------+--------------------+
+|  soy                 | izquierda          |
++----------------------+--------------------+
+1 row in set (0.04 sec)
+
+mysql>
+
+
+
+mysql> SELECT
+    -> LEFT( " soy una cadena de caracteres hacia izquierda ", 5) AS substrings_izquierdo,
+    -> RIGHT( " soy una cadena de caracteres hacia izquierda ", 10) AS substrings_derecho;
++----------------------+--------------------+
+| substrings_izquierdo | substrings_derecho |
++----------------------+--------------------+
+|  soy                 | izquierda          |
++----------------------+--------------------+
+1 row in set (0.04 sec)
+
+mysql>
+
+
+
+
+mysql> SELECT *FROM  libros WHERE LEFT(titulo, 12) = 'Harry potter';
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                                    | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+|        4 |        2 | Harry potter y la piedra Filosofa         | NULL        |   NULL | 1997-06-30        | 2021-11-27 11:39:07 |
+|        5 |        2 | Harry potter y Camara secreta             | NULL        |   NULL | 1998-07-02        | 2021-11-27 11:39:07 |
+|        6 |        2 | Harry potter y el prisionero de azkaban   | NULL        |   NULL | 1999-06-08        | 2021-11-27 11:39:07 |
+|        7 |        2 | Harry potter y el caliz de fuego          | NULL        |   NULL | 2000-03-20        | 2021-11-27 11:39:07 |
+|        8 |        2 | Harry potter y la orden de fenix          | NULL        |   NULL | 2003-06-21        | 2021-11-27 11:39:07 |
+|        9 |        2 | Harry potter y el misterio del principe   | NULL        |   NULL | 2005-06-16        | 2021-11-27 11:39:07 |
+|       10 |        2 | Harry potter y las reliquias de la muerte | NULL        |   NULL | 2007-07-21        | 2021-11-27 11:39:07 |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+7 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+mysql> SELECT *FROM  libros WHERE RIGHT(titulo, 5) = 'fenix';
++----------+----------+----------------------------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                           | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+----------------------------------+-------------+--------+-------------------+---------------------+
+|        8 |        2 | Harry potter y la orden de fenix | NULL        |   NULL | 2003-06-21        | 2021-11-27 11:39:07 |
++----------+----------+----------------------------------+-------------+--------+-------------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+Funciones sobre números
+
+
+
+
+SELEC RAND();
+
+FLOTANTE ENTRE CERO Y UNO 
+
+
+mysql> SELECT RAND();
++--------------------+
+| RAND()             |
++--------------------+
+| 0.2614458550339992 |
++--------------------+
+1 row in set (0.06 sec)
+
+mysql>
+
+
+
+
+
+
+mysql> SELECT RAND(RAND()*100);
++---------------------+
+| RAND(RAND()*100)    |
++---------------------+
+| 0.41126303133672387 |
++---------------------+
+1 row in set (0.06 sec)
+
+mysql>
+
+
+
+
+ME DEVUELVE LOS PRIMEROS DECIMALES
+SELECT TRUNCATE(1.5468648, 2);
+
+
+mysql> SELECT TRUNCATE(1.5468648, 2);
++------------------------+
+| TRUNCATE(1.5468648, 2) |
++------------------------+
+|                   1.54 |
++------------------------+
+1 row in set (0.05 sec)
+
+mysql>
+
+
+mysql> SELECT TRUNCATE(1.5468648, 6);
++------------------------+
+| TRUNCATE(1.5468648, 6) |
++------------------------+
+|               1.546864 |
++------------------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+
+
+POWER = EL RESULTADO DE ELEVAR UN NUMERO ALA POTENCIA
+
+
+POW  
+
+
+mysql> SELECT POW(5, 5);
++-----------+
+| POW(5, 5) |
++-----------+
+|      3125 |
++-----------+
+1 row in set (0.03 sec)
+
+mysql> SELECT POW(5, 2);
++-----------+
+| POW(5, 2) |
++-----------+
+|        25 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+Funciones sobre fechas
+
+SABER LA FECHA EXACTA [ NOW ]
+
+mysql> SET @now = NOW();
+Query OK, 0 rows affected (0.14 sec)
+
+fecha almacenada en una variable
+DIA DEL AÑO         MES DEL AÑOS           DIA AÑO
++-----------------+------------------+-----------------+
+| DAYOFWEEK(@now) | DAYOFMONTH(@now) | DAYOFYEAR(@now) |
++-----------------+------------------+-----------------+
+|               7 |               27 |             331 |
++-----------------+------------------+-----------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+
+mysql> SELECT @now;
++---------------------+
+| @now                |
++---------------------+
+| 2021-11-27 12:18:41 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+
+
+mysql> SELECT DATE (@now);
++-------------+
+| DATE (@now) |
++-------------+
+| 2021-11-27  |
++-------------+
+1 row in set (0.07 sec)
+
+mysql>
+
+
+
+
+
+CURDATE()
+
+SABER QUE REGISTROS SE CREARON A LA FECHA
+
+mysql> SELECT * FROM libros WHERE DATE(fecha_creacion) = CURDATE();
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                                    | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+|        1 |        1 | Carries                                   | NULL        |   NULL | 1974-09-27        | 2021-11-27 11:39:07 |
+|        2 |        1 | El misterio de salme lot                  | NULL        |   NULL | 1995-09-27        | 2021-11-27 11:39:07 |
+|        3 |        1 | El resplando                              | NULL        |   NULL | 1977-09-27        | 2021-11-27 11:39:07 |
+|        4 |        2 | Harry potter y la piedra Filosofa         | NULL        |   NULL | 1997-06-30        | 2021-11-27 11:39:07 |
+|        5 |        2 | Harry potter y Camara secreta             | NULL        |   NULL | 1998-07-02        | 2021-11-27 11:39:07 |
+|        6 |        2 | Harry potter y el prisionero de azkaban   | NULL        |   NULL | 1999-06-08        | 2021-11-27 11:39:07 |
+|        7 |        2 | Harry potter y el caliz de fuego          | NULL        |   NULL | 2000-03-20        | 2021-11-27 11:39:07 |
+|        8 |        2 | Harry potter y la orden de fenix          | NULL        |   NULL | 2003-06-21        | 2021-11-27 11:39:07 |
+|        9 |        2 | Harry potter y el misterio del principe   | NULL        |   NULL | 2005-06-16        | 2021-11-27 11:39:07 |
+|       10 |        2 | Harry potter y las reliquias de la muerte | NULL        |   NULL | 2007-07-21        | 2021-11-27 11:39:07 |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+10 rows in set (0.08 sec)
+
+mysql>
+
+
+
+
+Funciones
+
+ESTE ACRONIMO PARA SENTENCIA Y PODER GUARDAR LAS
+FUNCTIONS READS SQL DATA
+
+READS SQL DATA
+para deliminar DELIMITER //
+y luego regresarlo asu origen
+
+mysql> DELIMITER //
+mysql> CREATE FUNCTION obtener_paginas()
+    -> RETURNS INT READS SQL DATA
+    -> BEGIN
+    -> SET @paginas = (SELECT (ROUND (RAND() * 100) *4 ));
+    -> RETURN @paginas;
+    -> END; //
+Query OK, 0 rows affected (0.18 sec)
+
+mysql> DELIMITER ;
+mysql>
+
+
+
+
+mysql> SELECT obtener_paginas();
++-------------------+
+| obtener_paginas() |
++-------------------+
+|               120 |
++-------------------+
+1 row in set (0.28 sec)
+
+mysql>
+
+
+
+
+mysql> SELECT obtener_paginas();
++-------------------+
+| obtener_paginas() |
++-------------------+
+|               120 |
++-------------------+
+1 row in set (0.28 sec)
+
+mysql> SELECT obtener_paginas();
++-------------------+
+| obtener_paginas() |
++-------------------+
+|                44 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT obtener_paginas();
++-------------------+
+| obtener_paginas() |
++-------------------+
+|               264 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT obtener_paginas();
++-------------------+
+| obtener_paginas() |
++-------------------+
+|               388 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+mysql> UPDATE libros SET pagina = obtener_paginas();
+Query OK, 10 rows affected (0.14 sec)
+Rows matched: 10  Changed: 10  Warnings: 0
+
+mysql>
+
+
+
+actualizamos los registros de pagina
+
+
+
+mysql>
+mysql>
+mysql> SELECT * FROM libros;
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                                    | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+|        1 |        1 | Carries                                   | NULL        |    348 | 1974-09-27        | 2021-11-27 18:15:50 |
+|        2 |        1 | El misterio de salme lot                  | NULL        |    172 | 1995-09-27        | 2021-11-27 18:15:50 |
+|        3 |        1 | El resplando                              | NULL        |    212 | 1977-09-27        | 2021-11-27 18:15:50 |
+|        4 |        2 | Harry potter y la piedra Filosofa         | NULL        |    156 | 1997-06-30        | 2021-11-27 18:15:50 |
+|        5 |        2 | Harry potter y Camara secreta             | NULL        |    140 | 1998-07-02        | 2021-11-27 18:15:50 |
+|        6 |        2 | Harry potter y el prisionero de azkaban   | NULL        |    240 | 1999-06-08        | 2021-11-27 18:15:50 |
+|        7 |        2 | Harry potter y el caliz de fuego          | NULL        |    368 | 2000-03-20        | 2021-11-27 18:15:50 |
+|        8 |        2 | Harry potter y la orden de fenix          | NULL        |    320 | 2003-06-21        | 2021-11-27 18:15:50 |
+|        9 |        2 | Harry potter y el misterio del principe   | NULL        |    100 | 2005-06-16        | 2021-11-27 18:15:50 |
+|       10 |        2 | Harry potter y las reliquias de la muerte | NULL        |    344 | 2007-07-21        | 2021-11-27 18:15:50 |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+10 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+mysql> SELECT * FROM libros\G;
+*************************** 1. row ***************************
+         libro_id: 1
+         autor_id: 1
+           titulo: Carries
+      descripcion: NULL
+           pagina: 348
+fecha_publicacion: 1974-09-27
+   fecha_creacion: 2021-11-27 18:15:50
+*************************** 2. row ***************************
+         libro_id: 2
+         autor_id: 1
+           titulo: El misterio de salme lot
+      descripcion: NULL
+           pagina: 172
+fecha_publicacion: 1995-09-27
+   fecha_creacion: 2021-11-27 18:15:50
+*************************** 3. row ***************************
+         libro_id: 3
+         autor_id: 1
+           titulo: El resplando
+      descripcion: NULL
+           pagina: 212
+fecha_publicacion: 1977-09-27
+   fecha_creacion: 2021-11-27 18:15:50
+*************************** 4. row ***************************
+         libro_id: 4
+         autor_id: 2
+           titulo: Harry potter y la piedra Filosofa
+      descripcion: NULL
+           pagina: 156
+fecha_publicacion: 1997-06-30
+   fecha_creacion: 2021-11-27 18:15:50
+*************************** 5. row ***************************
+         libro_id: 5
+         autor_id: 2
+           titulo: Harry potter y Camara secreta
+      descripcion: NULL
+           pagina: 140
+fecha_publicacion: 1998-07-02
+   fecha_creacion: 2021-11-27 18:15:50
+*************************** 6. row ***************************
+         libro_id: 6
+         autor_id: 2
+           titulo: Harry potter y el prisionero de azkaban
+      descripcion: NULL
+           pagina: 240
+fecha_publicacion: 1999-06-08
+   fecha_creacion: 2021-11-27 18:15:50
+*************************** 7. row ***************************
+         libro_id: 7
+         autor_id: 2
+           titulo: Harry potter y el caliz de fuego
+      descripcion: NULL
+           pagina: 368
+fecha_publicacion: 2000-03-20
+   fecha_creacion: 2021-11-27 18:15:50
+*************************** 8. row ***************************
+         libro_id: 8
+         autor_id: 2
+           titulo: Harry potter y la orden de fenix
+      descripcion: NULL
+           pagina: 320
+fecha_publicacion: 2003-06-21
+   fecha_creacion: 2021-11-27 18:15:50
+*************************** 9. row ***************************
+         libro_id: 9
+         autor_id: 2
+           titulo: Harry potter y el misterio del principe
+      descripcion: NULL
+           pagina: 100
+fecha_publicacion: 2005-06-16
+   fecha_creacion: 2021-11-27 18:15:50
+*************************** 10. row ***************************
+         libro_id: 10
+         autor_id: 2
+           titulo: Harry potter y las reliquias de la muerte
+      descripcion: NULL
+           pagina: 344
+fecha_publicacion: 2007-07-21
+   fecha_creacion: 2021-11-27 18:15:50
+10 rows in set (0.00 sec)
+
+ERROR:
+No query specified
+
+mysql>
+mysql>
+Búsqueda mediante strings
+
+
+
+
+cuando usamos a LIKE
+se odmite el signo igual = 
+
+
+
+
+
+mysql> SELECT * FROM libros WHERE titulo LIKE 'Harry potter%';
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                                    | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+|        4 |        2 | Harry potter y la piedra Filosofa         | NULL        |    156 | 1997-06-30        | 2021-11-27 18:15:50 |
+|        5 |        2 | Harry potter y Camara secreta             | NULL        |    140 | 1998-07-02        | 2021-11-27 18:15:50 |
+|        6 |        2 | Harry potter y el prisionero de azkaban   | NULL        |    240 | 1999-06-08        | 2021-11-27 18:15:50 |
+|        7 |        2 | Harry potter y el caliz de fuego          | NULL        |    368 | 2000-03-20        | 2021-11-27 18:15:50 |
+|        8 |        2 | Harry potter y la orden de fenix          | NULL        |    320 | 2003-06-21        | 2021-11-27 18:15:50 |
+|        9 |        2 | Harry potter y el misterio del principe   | NULL        |    100 | 2005-06-16        | 2021-11-27 18:15:50 |
+|       10 |        2 | Harry potter y las reliquias de la muerte | NULL        |    344 | 2007-07-21        | 2021-11-27 18:15:50 |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+7 rows in set (0.04 sec)
+
+mysql>
+
+
+
+mysql> SELECT * FROM libros WHERE titulo LIKE 'Harry potter%'\G;
+*************************** 1. row ***************************
+         libro_id: 4
+         autor_id: 2
+           titulo: Harry potter y la piedra Filosofa
+      descripcion: NULL
+           pagina: 156
+fecha_publicacion: 1997-06-30
+   fecha_creacion: 2021-11-27 18:15:50
+*************************** 2. row ***************************
+         libro_id: 5
+         autor_id: 2
+           titulo: Harry potter y Camara secreta
+      descripcion: NULL
+           pagina: 140
+fecha_publicacion: 1998-07-02
+   fecha_creacion: 2021-11-27 18:15:50
+*************************** 3. row ***************************
+         libro_id: 6
+         autor_id: 2
+           titulo: Harry potter y el prisionero de azkaban
+      descripcion: NULL
+           pagina: 240
+fecha_publicacion: 1999-06-08
+   fecha_creacion: 2021-11-27 18:15:50
+*************************** 4. row ***************************
+         libro_id: 7
+         autor_id: 2
+           titulo: Harry potter y el caliz de fuego
+      descripcion: NULL
+           pagina: 368
+fecha_publicacion: 2000-03-20
+   fecha_creacion: 2021-11-27 18:15:50
+*************************** 5. row ***************************
+         libro_id: 8
+         autor_id: 2
+           titulo: Harry potter y la orden de fenix
+      descripcion: NULL
+           pagina: 320
+fecha_publicacion: 2003-06-21
+   fecha_creacion: 2021-11-27 18:15:50
+*************************** 6. row ***************************
+         libro_id: 9
+         autor_id: 2
+           titulo: Harry potter y el misterio del principe
+      descripcion: NULL
+           pagina: 100
+fecha_publicacion: 2005-06-16
+   fecha_creacion: 2021-11-27 18:15:50
+*************************** 7. row ***************************
+         libro_id: 10
+         autor_id: 2
+           titulo: Harry potter y las reliquias de la muerte
+      descripcion: NULL
+           pagina: 344
+fecha_publicacion: 2007-07-21
+   fecha_creacion: 2021-11-27 18:15:50
+7 rows in set (0.00 sec)
+
+ERROR:
+ FORMATO DE CARTAS
+
+
+
+
+
+mysql> SELECT * FROM libros WHERE titulo LIKE '%fenix'\G;
+*************************** 1. row ***************************
+         libro_id: 8
+         autor_id: 2
+           titulo: Harry potter y la orden de fenix
+      descripcion: NULL
+           pagina: 320
+fecha_publicacion: 2003-06-21
+   fecha_creacion: 2021-11-27 18:15:50
+1 row in set (0.00 sec)
+
+ERROR:
+No query specified
+
+mysql>
+fenix%' al principio
+%fenix' al final 
+
+
+
+
+mysql> SELECT * FROM libros WHERE titulo LIKE '%fenix';
++----------+----------+----------------------------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                           | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+----------------------------------+-------------+--------+-------------------+---------------------+
+|        8 |        2 | Harry potter y la orden de fenix | NULL        |    320 | 2003-06-21        | 2021-11-27 18:15:50 |
++----------+----------+----------------------------------+-------------+--------+-------------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql>
+si estamos buscando un sub string y no sabemos donde esta ubicado nos apoyamos del doble porcentaje 
+
+%la%
+
+mysql> SELECT * FROM libros WHERE titulo LIKE '%la%';
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                                    | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+|        3 |        1 | El resplando                              | NULL        |    212 | 1977-09-27        | 2021-11-27 18:15:50 |
+|        4 |        2 | Harry potter y la piedra Filosofa         | NULL        |    156 | 1997-06-30        | 2021-11-27 18:15:50 |
+|        8 |        2 | Harry potter y la orden de fenix          | NULL        |    320 | 2003-06-21        | 2021-11-27 18:15:50 |
+|       10 |        2 | Harry potter y las reliquias de la muerte | NULL        |    344 | 2007-07-21        | 2021-11-27 18:15:50 |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+4 rows in set (0.00 sec)
+
+mysql>
+
+
+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM libros WHERE titulo LIKE '%la%'\G;
+*************************** 1. row ***************************
+         libro_id: 3
+         autor_id: 1
+           titulo: El resplando
+      descripcion: NULL
+           pagina: 212
+fecha_publicacion: 1977-09-27
+   fecha_creacion: 2021-11-27 18:15:50
+*************************** 2. row ***************************
+         libro_id: 4
+         autor_id: 2
+           titulo: Harry potter y la piedra Filosofa
+      descripcion: NULL
+           pagina: 156
+fecha_publicacion: 1997-06-30
+   fecha_creacion: 2021-11-27 18:15:50
+*************************** 3. row ***************************
+         libro_id: 8
+         autor_id: 2
+           titulo: Harry potter y la orden de fenix
+      descripcion: NULL
+           pagina: 320
+fecha_publicacion: 2003-06-21
+   fecha_creacion: 2021-11-27 18:15:50
+*************************** 4. row ***************************
+         libro_id: 10
+         autor_id: 2
+           titulo: Harry potter y las reliquias de la muerte
+      descripcion: NULL
+           pagina: 344
+fecha_publicacion: 2007-07-21
+   fecha_creacion: 2021-11-27 18:15:50
+4 rows in set (0.00 sec)
+
+ERROR:
+No query specified
+
+mysql>
+
+
+
+CONDICIONES MAS COMPLEJAS
+CON LIKE
+
+
+
+
+ejempo por caracter
+
+
+
+mysql> SELECT * FROM libros WHERE titulo LIKE '_a%';
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                                    | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+|        1 |        1 | Carries                                   | NULL        |    348 | 1974-09-27        | 2021-11-27 18:15:50 |
+|        4 |        2 | Harry potter y la piedra Filosofa         | NULL        |    156 | 1997-06-30        | 2021-11-27 18:15:50 |
+|        5 |        2 | Harry potter y Camara secreta             | NULL        |    140 | 1998-07-02        | 2021-11-27 18:15:50 |
+|        6 |        2 | Harry potter y el prisionero de azkaban   | NULL        |    240 | 1999-06-08        | 2021-11-27 18:15:50 |
+|        7 |        2 | Harry potter y el caliz de fuego          | NULL        |    368 | 2000-03-20        | 2021-11-27 18:15:50 |
+|        8 |        2 | Harry potter y la orden de fenix          | NULL        |    320 | 2003-06-21        | 2021-11-27 18:15:50 |
+|        9 |        2 | Harry potter y el misterio del principe   | NULL        |    100 | 2005-06-16        | 2021-11-27 18:15:50 |
+|       10 |        2 | Harry potter y las reliquias de la muerte | NULL        |    344 | 2007-07-21        | 2021-11-27 18:15:50 |
++----------+----------+-------------------------------------------+-------------+--------+-------------------+---------------------+
+8 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+mysql> SELECT * FROM libros WHERE titulo LIKE '%_a_o%';
++----------+----------+----------------------------------+-------------+--------+-------------------+---------------------+
+| libro_id | autor_id | titulo                           | descripcion | pagina | fecha_publicacion | fecha_creacion      |
++----------+----------+----------------------------------+-------------+--------+-------------------+---------------------+
+|        8 |        2 | Harry potter y la orden de fenix | NULL        |    320 | 2003-06-21        | 2021-11-27 18:15:50 |
++----------+----------+----------------------------------+-------------+--------+-------------------+---------------------+
+1 row in set (0.00 sec)
+
+
+Expresiones regulares
+
+
+
+
+mysql> SELECT autor_id titulo FROM libros WHERE titulo LIKE 'H%' OR titulo LIKE 'L%';
++--------+
+| titulo |
++--------+
+|      2 |
+|      2 |
+|      2 |
+|      2 |
+|      2 |
+|      2 |
+|      2 |
++--------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT autor_id titulo FROM libros WHERE LEFT (titulo, 1) = 'H' OR LEFT(titulo, 1) = 'L';
++--------+
+| titulo |
++--------+
+|      2 |
+|      2 |
+|      2 |
+|      2 |
+|      2 |
+|      2 |
+|      2 |
++--------+
+7 rows in set (0.04 sec)
+
+mysql>
+
+
+
+
+
+mysql>
+
+
+
+mysql> SELECT titulo FROM libros WHERE titulo REGEXP '^[HL]';
++-------------------------------------------+
+| titulo                                    |
++-------------------------------------------+
+| Harry potter y la piedra Filosofa         |
+| Harry potter y Camara secreta             |
+| Harry potter y el prisionero de azkaban   |
+| Harry potter y el caliz de fuego          |
+| Harry potter y la orden de fenix          |
+| Harry potter y el misterio del principe   |
+| Harry potter y las reliquias de la muerte |
++-------------------------------------------+
+7 rows in set (0.36 sec)
+
+mysql>
+
+
+
+
+
+
++-------------------------------------------+
+| titulo                                    |
++-------------------------------------------+
+| Harry potter y la piedra Filosofa         |
+| Harry potter y Camara secreta             |
+| Harry potter y el prisionero de azkaban   |
+| Harry potter y el caliz de fuego          |
+| Harry potter y la orden de fenix          |
+| Harry potter y el misterio del principe   |
+| Harry potter y las reliquias de la muerte |
++-------------------------------------------+
+7 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+Ordenar registros
+
+mysql> SELECT titulo FROM libros;
++-------------------------------------------+
+| titulo                                    |
++-------------------------------------------+
+| Carries                                   |
+| El misterio de salme lot                  |
+| El resplando                              |
+| Harry potter y la piedra Filosofa         |
+| Harry potter y Camara secreta             |
+| Harry potter y el prisionero de azkaban   |
+| Harry potter y el caliz de fuego          |
+| Harry potter y la orden de fenix          |
+| Harry potter y el misterio del principe   |
+| Harry potter y las reliquias de la muerte |
++-------------------------------------------+
+10 rows in set (0.00 sec)
+
+mysql>
+
+no esta ordenado
+veamos ahora > >
+mysql> SELECT titulo FROM libros ORDER BY titulo;
++-------------------------------------------+
+| titulo                                    |
++-------------------------------------------+
+| Carries                                   |
+| El misterio de salme lot                  |
+| El resplando                              |
+| Harry potter y Camara secreta             |
+| Harry potter y el caliz de fuego          |
+| Harry potter y el misterio del principe   |
+| Harry potter y el prisionero de azkaban   |
+| Harry potter y la orden de fenix          |
+| Harry potter y la piedra Filosofa         |
+| Harry potter y las reliquias de la muerte |
++-------------------------------------------+
+   ordenado de forma ascendente (a - z)10 rows in set (0.04 sec)
+
+mysql> 
+
+
+
+mysql> SELECT titulo FROM libros ORDER BY titulo DESC;
++-------------------------------------------+
+| titulo                                    |
++-------------------------------------------+
+| Harry potter y las reliquias de la muerte |
+| Harry potter y la piedra Filosofa         |
+| Harry potter y la orden de fenix          |
+| Harry potter y el prisionero de azkaban   |
+| Harry potter y el misterio del principe   |
+| Harry potter y el caliz de fuego          |
+| Harry potter y Camara secreta             |
+| El resplando                              |
+| El misterio de salme lot                  |
+| Carries                                   |
++-------------------------------------------+
+10 rows in set (0.00 sec)
+ DE (Z - A ) DESC 
+mysql>
+
+
+
+
+mysql> SELECT libro_id FROM libros ORDER BY libro_id DESC;
++----------+
+| libro_id |
++----------+
+|       10 |
+|        9 |
+|        8 |
+|        7 |
+|        6 |
+|        5 |
+|        4 |
+|        3 |
+|        2 |
+|        1 |
++----------+
+10 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+mysql> SELECT libro_id FROM libros ORDER BY libro_id;
++----------+
+| libro_id |
++----------+
+|        1 |
+|        2 |
+|        3 |
+|        4 |
+|        5 |
+|        6 |
+|        7 |
+|        8 |
+|        9 |
+|       10 |
++----------+
+10 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+mysql> SELECT libro_id FROM libros ORDER BY libro_id ASC;
++----------+
+| libro_id |
++----------+
+|        1 |
+|        2 |
+|        3 |
+|        4 |
+|        5 |
+|        6 |
+|        7 |
+|        8 |
+|        9 |
+|       10 |
++----------+
+10 rows in set (0.00 sec)
+
+mysql>
+
+
+
+mysql> SELECT libro_id, titulo FROM libros ORDER BY libro_id AND titulo ASC;
++----------+-------------------------------------------+
+| libro_id | titulo                                    |
++----------+-------------------------------------------+
+|        1 | Carries                                   |
+|        2 | El misterio de salme lot                  |
+|        3 | El resplando                              |
+|        4 | Harry potter y la piedra Filosofa         |
+|        5 | Harry potter y Camara secreta             |
+|        6 | Harry potter y el prisionero de azkaban   |
+|        7 | Harry potter y el caliz de fuego          |
+|        8 | Harry potter y la orden de fenix          |
+|        9 | Harry potter y el misterio del principe   |
+|       10 | Harry potter y las reliquias de la muerte |
++----------+-------------------------------------------+
+10 rows in set, 10 warnings (0.00 sec)
+
+mysql>   ordenar por varios campos
+
+
+
+Limitar registros
+
+CLAUSULA LIMIT 
+
+mysql> SELECT titulo FROM libros LIMIT 5;
++-----------------------------------+
+| titulo                            |
++-----------------------------------+
+| Carries                           |
+| El misterio de salme lot          |
+| El resplando                      |
+| Harry potter y la piedra Filosofa |
+| Harry potter y Camara secreta     |
++-----------------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT titulo FROM libros LIMIT 3;
++--------------------------+
+| titulo                   |
++--------------------------+
+| Carries                  |
+| El misterio de salme lot |
+| El resplando             |
++--------------------------+
+3 rows in set (0.00 sec)
+
+mysql>
+
+mysql> SELECT titulo FROM libros WHERE autor_id = 2 LIMIT 3;
++-----------------------------------------+
+| titulo                                  |
++-----------------------------------------+
+| Harry potter y la piedra Filosofa       |
+| Harry potter y Camara secreta           |
+| Harry potter y el prisionero de azkaban |
++-----------------------------------------+
+3 rows in set (0.06 sec)
+
+mysql> SELECT titulo FROM libros WHERE autor_id = 2;
++-------------------------------------------+
+| titulo                                    |
++-------------------------------------------+
+| Harry potter y la piedra Filosofa         |
+| Harry potter y Camara secreta             |
+| Harry potter y el prisionero de azkaban   |
+| Harry potter y el caliz de fuego          |
+| Harry potter y la orden de fenix          |
+| Harry potter y el misterio del principe   |
+| Harry potter y las reliquias de la muerte |
++-------------------------------------------+
+7 rows in set (0.00 sec)
+
+mysql>
+
+
+
+mysql> SELECT titulo FROM libros WHERE autor_id = 2 LIMIT 5;
++-----------------------------------------+
+| titulo                                  |
++-----------------------------------------+
+| Harry potter y la piedra Filosofa       |
+| Harry potter y Camara secreta           |
+| Harry potter y el prisionero de azkaban |
+| Harry potter y el caliz de fuego        |
+| Harry potter y la orden de fenix        |
++-----------------------------------------+
+5 rows in set (0.00 sec)
+
+mysql>
+
+
+mysql> SELECT libro_id , titulo FROM libros LIMIT 0, 5;
++----------+-----------------------------------+
+| libro_id | titulo                            |
++----------+-----------------------------------+
+|        1 | Carries                           |
+|        2 | El misterio de salme lot          |
+|        3 | El resplando                      |
+|        4 | Harry potter y la piedra Filosofa |
+|        5 | Harry potter y Camara secreta     |
++----------+-----------------------------------+
+5 rows in set (0.00 sec)
+
+
+paginar con limit
+mysql> SELECT libro_id , titulo FROM libros LIMIT 2, 5;
++----------+-----------------------------------------+
+| libro_id | titulo                                  |
++----------+-----------------------------------------+
+|        3 | El resplando                            |
+|        4 | Harry potter y la piedra Filosofa       |
+|        5 | Harry potter y Camara secreta           |
+|        6 | Harry potter y el prisionero de azkaban |
+|        7 | Harry potter y el caliz de fuego        |
++----------+-----------------------------------------+
+5 rows in set (0.00 sec)
+
+mysql>
+
+
+
+Funciones de agregación
+
+5 son 5
+COUNT
+
+--
+
+
+mysql> SELECT COUNT(*) FROM autores;
++----------+
+| COUNT(*) |
++----------+
+|        2 |
++----------+
+1 row in set (0.15 sec)
+
+mysql>
+
+
+
+mysql> SELECT COUNT(*) FROM libros;
++----------+
+| COUNT(*) |
++----------+
+|       10 |
++----------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+mysql> SELECT COUNT(*) AS total FROM libros;
++-------+
+| total |
++-------+
+|    10 |
++-------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+
+
+mysql> SELECT COUNT(*) AS total FROM autores WHERE seudonimo IS NOT NULL;
++-------+
+| total |
++-------+
+|     2 |
++-------+
+1 row in set (0.09 sec)
+
+mysql>
+
+
+
+
+
+mysql> SELECT COUNT(seudonimo) AS total FROM autores;
++-------+
+| total |
++-------+
+|     2 |
++-------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+
+
+mysql> SELECT ventas FROM libros;
++--------+
+| ventas |
++--------+
+|      0 |
+|      0 |
+|      0 |
+|      0 |
+|      0 |
+|      0 |
+|      0 |
+|      0 |
+|      0 |
+|      0 |
++--------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT SUM(ventas) FROM libros;
++-------------+
+| SUM(ventas) |
++-------------+
+|           0 |
++-------------+
+1 row in set (0.04 sec)
+
+mysql>
+
+
+
+10 rows in set (0.00 sec)
+
+mysql> SELECT MAX(ventas) FROM libros;
++-------------+
+| MAX(ventas) |
++-------------+
+|           0 |
++-------------+
+1 row in set (0.05 sec)
+
+mysql>
+
+
+
+mysql> SELECT MIN(stock) FROM libros;
++------------+
+| MIN(stock) |
++------------+
+|         10 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUM(stock) FROM libros;
++------------+
+| SUM(stock) |
++------------+
+|        100 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAX(stock) FROM libros;
++------------+
+| MAX(stock) |
++------------+
+|         10 |
++------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+
+mysql> SELECT AVG(stock) FROM libros;
++------------+
+| AVG(stock) |
++------------+
+|    10.0000 |
++------------+
+1 row in set (0.04 sec)
+
+mysql>
+
+
+Agrupamiento
+Agrupamiento
+
+
+
+mysql> SELECT autor_id, SUM(stock) FROM libros GROUP BY autor_id;
++----------+------------+
+| autor_id | SUM(stock) |
++----------+------------+
+|        1 |         30 |
+|        2 |         70 |
++----------+------------+
+2 rows in set (0.05 sec)
+
+
+
+
+
+
+
+mysql> SELECT autor_id, SUM(stock) AS total FROM libros GROUP BY autor_id;
++----------+-------+
+| autor_id | total |
++----------+-------+
+|        1 |    30 |
+|        2 |    70 |
++----------+-------+
+2 rows in set (0.00 sec)
+
+mysql> 
+
+
+mysql> SELECT autor_id, SUM(stock) AS total FROM libros GROUP BY autor_id ORDER BY total DESC;
++----------+-------+
+| autor_id | total |
++----------+-------+
+|        2 |    70 |
+|        1 |    30 |
++----------+-------+
+2 rows in set (0.03 sec)
+
+mysql>
+
+mysql>
+
+
+mysql> SELECT autor_id, SUM(stock) AS total FROM libros GROUP BY autor_id ORDER BY total DESC LIMIT 1;
++----------+-------+
+| autor_id | total |
++----------+-------+
+|        2 |    70 |
++----------+-------+
+1 row in set (0.04 sec)
+
+mysql>
+
+
+Condiciones bajo agrupamiento
+
+
+
+
+mysql> SELECT autor_id, SUM(stock) AS total FROM libros GROUP BY autor_id HAVING SUM(stock) > 50;
++----------+-------+
+| autor_id | total |
++----------+-------+
+|        2 |    70 |
++----------+-------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+
+Sub consultas
+mysql> SELECT AVG(stock) FROM libros;
++------------+
+| AVG(stock) |
++------------+
+|    10.0000 |
++------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+mysql> SELECT autor_id FROM libros GROUP BY autor_id HAVING SUM(stock) > 10.0000;
++----------+
+| autor_id |
++----------+
+|        1 |
+|        2 |
++----------+
+2 rows in set (0.00 sec)
+
+mysql>
+
+
+mysql>  SET @Ppromedio = (SELECT AVG(stock) FROM libros);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql>
+
+
+
+mysql> SELECT autor_id FROM libros GROUP BY autor_id HAVING SUM(stock) > @Ppromedio;
++----------+
+| autor_id |
++----------+
+|        1 |
+|        2 |
++----------+
+2 rows in set (0.00 sec)
+
+mysql>
+
+
+mysql> SELECT autor_id FROM libros GROUP BY autor_id HAVING SUM(stock) > (SELECT AVG(stock) FROM libros);
++----------+
+| autor_id |
++----------+
+|        1 |
+|        2 |
++----------+
+2 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+
+Ejercicios
+Aquí un listado de ejercicios con los cuales puedes practicar a partir de los datos que se encuentran en el archivo sentencias.sql
+
+Tu puedes agregar más datos (reales) si así tú lo deseas. Si aun no poses el archivo puedes descargarlo en el siguiente link
+
+LIBROS
+Obtener todos los libros escritos por autores que cuenten con un seudónimo.
+
+Obtener el título de todos los libros publicados en el año actual cuyos autores poseen un pseudónimo.
+
+Obtener todos los libros escritos por autores que cuenten con un seudónimo y que hayan nacido ante de 1965.
+
+Colocar el mensaje no disponible a la columna descripción, en todos los libros publicados antes del año 2000.
+
+Obtener la llave primaria de todos los libros cuya descripción sea diferente de no disponible.
+
+Obtener el título de los últimos 3 libros escritos por el autor con id 2.
+
+Obtener en un mismo resultado la cantidad de libros escritos por autores con seudónimo y sin seudónimo.
+
+Ejemplo
+
+con seudónimo	sin seudónimo
+10	20
+Obtener la cantidad de libros publicados entre enero del año 2000 y enero del año 2005.
+
+Obtener el título y el número de ventas de los cinco libros más vendidos.
+
+Obtener el título y el número de ventas de los cinco libros más vendidos de la última década.
+Obtener la cantidad de libros vendidos por los autores con id 1, 2 y 3.
+Ejemplo
+
+autor	ventas
+1	10
+2	20
+2	30
+Obtener el título del libro con más páginas.
+
+Obtener todos los libros cuyo título comience con la palabra “La”.
+
+Obtener todos los libros cuyo título comience con la palabra “La” y termine con la letra “a”.
+
+Establecer el stock en cero a todos los libros publicados antes del año de 1995
+
+Mostrar el mensaje Disponible si el libro con id 1 posee más de 5 ejemplares en stock, en caso contrario mostrar el mensaje No disponible.
+
+Obtener el título los libros ordenador por fecha de publicación del más reciente al más viejo.
+
+AUTORES
+Obtener el nombre de los autores cuya fecha de nacimiento sea posterior a 1950
+
+Obtener la el nombre completo y la edad de todos los autores.
+
+Obtener el nombre completo de todos los autores cuyo último libro publicado sea posterior al 2005
+
+Obtener el id de todos los escritores cuyas ventas en sus libros superen el promedio.
+
+Obtener el id de todos los escritores cuyas ventas en sus libros sean mayores a cien mil ejemplares.
+
+FUNCIONES
+Crear una función la cual nos permita saber si un libro es candidato a préstamo o no. Retornar “Disponible” si el libro posee por lo menos un ejemplar en stock, en caso contrario retornar “No disponible.”
+
