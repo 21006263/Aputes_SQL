@@ -1,3 +1,9 @@
+installaciones necesarias 
+Install-module -Name SqlServer -AllowClobber sql server
+Install-module -Name SqlServer -AllowClobber sql server -force
+Update-module -Name SqlServer
+
+
 Motores de almacenamiento en MySQL
 Afortunadamente para nosotros, los administradores de base de datos, MySQL nos permite trabajar con diferentes motores de almacenamiento, entre los que destacan MyISAM e InnoDB.
 
