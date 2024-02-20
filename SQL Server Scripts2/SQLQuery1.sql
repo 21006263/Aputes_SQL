@@ -237,8 +237,7 @@ RIGHT JON AdventureWorks2017_NUEVA person, EmailAddress B ON B BusinessEntityID 
 
 WHERE ISHULLA. Business EntityID,e
 
-A
-[29/01/2024 22:29] Henry: Sudio
+
 
 ndow Help
 
@@ -351,3 +350,17 @@ SELECT from person. Address A-order by len (AddressLinel) desc WHERE CONTAINS (A
 Megory
 
 10
+
+DBCC CLONEDATABASE (AdventureWorks2022, AdventureCopia2)
+
+-- Conéctate a la base de datos
+USE TuBaseDeDatos;
+
+-- Crear un rol personalizado
+CREATE ROLE AdventureWorks;
+
+-- Otorgar permisos al rol para clonar bases de datos
+GRANT CREATE DATABASE TO AdventureWorks;
+
+-- Agregar usuario al rol personalizado
+EXEC sp_addrolemember 'AdventureWorks2022', 'AdventureWorks'
